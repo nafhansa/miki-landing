@@ -2,10 +2,11 @@
 
 import React, { useLayoutEffect, useRef } from 'react';
 import { useThree } from '@react-three/fiber';
-import { Environment, PerspectiveCamera } from '@react-three/drei';
+import { PerspectiveCamera, ContactShadows, Environment } from '@react-three/drei';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { RunningMan } from './RunningMan';
+import { LandingBackground } from './LandingBackground'; // <--- Import background baru
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,7 +21,7 @@ interface HeroSceneProps {
   model?: { position?: [number, number, number]; scale?: [number, number, number] };
 }
 
-// 1. Single Source of Truth: Definisikan di luar component
+// 🔒 POSISI KAMERA LOCKED (Sesuai request)
 const DEFAULT_CAMERA_POSITIONS: CameraPositions = {
   start: { x: -3, y: 0.5, z: -3 },      
   topView: { x: 0, y: 8, z: 0.5 },
@@ -30,7 +31,7 @@ const DEFAULT_CAMERA_POSITIONS: CameraPositions = {
 
 export function HeroScene({ 
   textRefs, 
-  cameraPositions = DEFAULT_CAMERA_POSITIONS, // 2. Gunakan sebagai default prop
+  cameraPositions = DEFAULT_CAMERA_POSITIONS, 
   cameraFov = 50, 
   model 
 }: HeroSceneProps) {
@@ -39,7 +40,7 @@ export function HeroScene({
   const tl = useRef<gsap.core.Timeline | null>(null);
 
   useLayoutEffect(() => {
-    // 3. Langsung set posisi kamera saat mount agar sinkron dengan PerspectiveCamera
+    // Set posisi awal
     camera.position.set(
       cameraPositions.start.x, 
       cameraPositions.start.y, 
@@ -85,13 +86,40 @@ export function HeroScene({
 
   return (
     <>
-      <color attach="background" args={['#ffffff']} />
+      {/* 1. Pencahayaan Studio Modern */}
+      {/* Ambient light redup agar tidak flat */}
+      <ambientLight intensity={0.4} /> 
       
-      <ambientLight intensity={1.5} />
-      <directionalLight position={[5, 10, 5]} intensity={2} castShadow />
+      {/* Main Light (Kanan Depan) - Cahaya utama */}
+      <directionalLight 
+        position={[5, 5, 5]} 
+        intensity={2} 
+        color="#ffffff" 
+        castShadow 
+      />
+      
+      {/* Rim Light (Kiri Belakang) - Warna Biru Muda/Cyan */}
+      {/* Ini kunci agar karakter terlihat 'tech' dan terpisah dari background gelap */}
+      <spotLight 
+        position={[-5, 5, -5]} 
+        intensity={5} 
+        color="#00d2ff" 
+        angle={0.5} 
+        penumbra={1} 
+      />
+
+      {/* Fill Light (Kanan Bawah) - Warna Ungu */}
+      <spotLight 
+        position={[5, 0, 5]} 
+        intensity={2} 
+        color="#bd00ff" 
+        angle={1} 
+        penumbra={1} 
+      />
+
+      {/* Environment map untuk pantulan kulit/baju agar lebih real */}
       <Environment preset="city" />
 
-      {/* 4. Gunakan props yang sama persis, tanpa hardcode '?? 0' lagi */}
       <PerspectiveCamera
         makeDefault
         position={[
@@ -102,9 +130,23 @@ export function HeroScene({
         fov={cameraFov}
       />
       
+      {/* 2. BACKGROUND GRADIENT MODERN */}
+      <LandingBackground />
+
       <RunningMan
         scale={model?.scale ?? [1, 1, 1]}
         position={model?.position ?? [0, 0, 0]}
+      />
+
+      {/* 3. SHADOW */}
+      {/* Bayangan tetap penting agar karakter tidak terlihat melayang */}
+      <ContactShadows 
+        resolution={1024} 
+        scale={10} 
+        blur={2} 
+        opacity={0.5} 
+        far={2} 
+        color="#000000" 
       />
     </>
   );
