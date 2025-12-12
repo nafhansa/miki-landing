@@ -1,0 +1,181 @@
+'use client';
+
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScanLine, Activity, MapPin, ArrowRight, Bell } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
+
+export default function Benefits() {
+  const containerRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const sections = gsap.utils.toArray(".feature-row");
+      
+      sections.forEach((section: any) => {
+        gsap.fromTo(
+          section,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 70%",
+            },
+          }
+        );
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={containerRef} className="py-24 bg-white overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <h2 className="text-sm font-bold tracking-widest text-[#00B7B5] uppercase mb-3">
+            Core Technology
+          </h2>
+          <h3 className="text-3xl lg:text-4xl font-bold text-[#005461] leading-tight">
+            Advanced Tech. <br /> Simple Experience.
+          </h3>
+        </div>
+
+        <div className="feature-row flex flex-col lg:flex-row items-center gap-12 lg:gap-24 mb-32">
+          <div className="w-full lg:w-1/2">
+            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-[#005461] mb-6">
+              <ScanLine size={24} />
+            </div>
+            <h3 className="text-3xl font-bold text-[#005461] mb-4">
+              Real-time AI Food Recognition
+            </h3>
+            <p className="text-gray-600 text-lg leading-relaxed mb-8">
+              Forget manual logging. Just point your camera. Our computer vision model identifies ingredients, estimates portion sizes, and detects hidden sugars instantly.
+            </p>
+            <ul className="space-y-3">
+              {['98% Accuracy', 'Detects Sauces & Oils', 'Instant Macro Calculation'].map((item, i) => (
+                <li key={i} className="flex items-center gap-3 text-gray-700 font-medium">
+                  <span className="w-2 h-2 rounded-full bg-[#00B7B5]"></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="w-full lg:w-1/2 relative">
+            <div className="relative w-full max-w-md mx-auto aspect-square bg-[#F4F4F4] rounded-[2rem] overflow-hidden shadow-2xl border border-gray-100 group">
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+                <span className="text-9xl">🥗</span>
+              </div>
+              
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 border-2 border-[#00B7B5] rounded-xl flex items-end justify-start p-0 overflow-hidden shadow-[0_0_15px_rgba(0,183,181,0.5)]">
+                 <div className="bg-[#00B7B5] text-white text-[10px] px-2 py-1 font-bold absolute bottom-0 left-0">Salad Bowl</div>
+              </div>
+              
+              <div className="absolute left-0 right-0 h-0.5 bg-[#00B7B5] shadow-[0_0_20px_rgba(0,183,181,0.8)] top-0 group-hover:top-full transition-all duration-[2500ms] ease-linear infinite"></div>
+              
+              <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-white z-10">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-bold text-[#005461]">Scanning...</span>
+                  <span className="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">Safe</span>
+                </div>
+                <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                  <div className="bg-[#005461] h-full w-[85%] animate-[load_2s_ease-out_forwards]"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="feature-row flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-24 mb-32">
+          <div className="w-full lg:w-1/2">
+            <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-red-600 mb-6">
+              <Activity size={24} />
+            </div>
+            <h3 className="text-3xl font-bold text-[#005461] mb-4">
+              Dynamic Organ Simulation
+            </h3>
+            <p className="text-gray-600 text-lg leading-relaxed mb-8">
+              Your avatar's organs react to your habits. High sodium? Watch the kidneys turn stony. Too much sugar? The pancreas gets inflamed. It's cause and effect, visualized.
+            </p>
+          </div>
+
+          <div className="w-full lg:w-1/2 relative">
+             <div className="relative w-full max-w-md mx-auto aspect-square bg-[#005461] rounded-[2rem] overflow-hidden shadow-2xl flex items-center justify-center">
+                <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '20px 20px'}}></div>
+                
+                <div className="relative z-10 text-center">
+                  <div className="relative inline-block">
+                    <div className="absolute inset-0 bg-red-500 rounded-full blur-2xl opacity-20 animate-ping"></div>
+                    <div className="text-9xl animate-pulse">🫀</div>
+                  </div>
+                  <div className="mt-8 bg-white/10 backdrop-blur-md px-6 py-3 rounded-xl border border-white/10">
+                    <p className="text-white text-sm opacity-80 mb-1">Cardiovascular Health</p>
+                    <div className="flex items-center gap-2 justify-center">
+                       <span className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
+                       <span className="text-xl font-bold text-white">Excellent</span>
+                    </div>
+                  </div>
+                </div>
+             </div>
+          </div>
+        </div>
+
+        <div className="feature-row flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+          <div className="w-full lg:w-1/2">
+            <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 mb-6">
+              <MapPin size={24} />
+            </div>
+            <h3 className="text-3xl font-bold text-[#005461] mb-4">
+              Context-Aware Nudges
+            </h3>
+            <p className="text-gray-600 text-lg leading-relaxed mb-8">
+              Using GPS and dwelling time, we know when you're at a restaurant. We'll suggest the healthiest menu item that fits your remaining macros for the day.
+            </p>
+          </div>
+
+          <div className="w-full lg:w-1/2 relative">
+             <div className="relative w-full max-w-md mx-auto aspect-square bg-gray-100 rounded-[2rem] overflow-hidden shadow-2xl border border-gray-200">
+                <div 
+                  className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/e/ec/Map_symbol_location_02.png')] bg-repeat opacity-10" 
+                  style={{ backgroundSize: '200px' }}
+                ></div>
+                
+                 <div 
+                  className="absolute inset-0 bg-[url('https://tile.openstreetmap.org/15/16422/10803.png')] bg-cover bg-center opacity-40 grayscale-[20%]"
+                ></div>
+
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-64 h-64 border border-[#00B7B5]/30 rounded-full absolute animate-[ping_3s_linear_infinite]"></div>
+                  <div className="w-48 h-48 border border-[#00B7B5]/50 rounded-full absolute animate-[ping_3s_linear_infinite_1s]"></div>
+                </div>
+
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-[#005461] border-4 border-white rounded-full shadow-lg z-20"></div>
+
+                <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-12 bg-white p-4 rounded-xl shadow-xl z-30 w-56 transform transition-all hover:scale-105 cursor-pointer">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center shrink-0">
+                      <Bell size={14} className="text-orange-600" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-gray-400 uppercase">Suggestion</p>
+                      <p className="text-sm font-bold text-[#005461] leading-tight">Order the Grilled Salmon!</p>
+                      <p className="text-xs text-green-600 mt-1">Fits your protein goal.</p>
+                    </div>
+                  </div>
+                </div>
+             </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
