@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScanLine, Activity, MapPin, ArrowRight, Bell } from "lucide-react";
+import { ScanLine, Activity, MapPin, Bell } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,9 +12,9 @@ export default function Benefits() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const sections = gsap.utils.toArray(".feature-row");
-      
-      sections.forEach((section: any) => {
+      const sections = gsap.utils.toArray<Element>(".feature-row");
+
+      sections.forEach((section) => {
         gsap.fromTo(
           section,
           { opacity: 0, y: 50 },
@@ -103,7 +103,7 @@ export default function Benefits() {
               Dynamic Organ Simulation
             </h3>
             <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              Your avatar's organs react to your habits. High sodium? Watch the kidneys turn stony. Too much sugar? The pancreas gets inflamed. It's cause and effect, visualized.
+              Your avatar&#39;s organs react to your habits. High sodium? Watch the kidneys turn stony. Too much sugar? The pancreas gets inflamed. It&#39;s cause and effect, visualized.
             </p>
           </div>
 
@@ -137,7 +137,7 @@ export default function Benefits() {
               Context-Aware Nudges
             </h3>
             <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              Using GPS and dwelling time, we know when you're at a restaurant. We'll suggest the healthiest menu item that fits your remaining macros for the day.
+              Using GPS and dwelling time, we know when you&#39;re at a restaurant. We&#39;ll suggest the healthiest menu item that fits your remaining macros for the day.
             </p>
           </div>
 

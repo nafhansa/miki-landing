@@ -86,7 +86,7 @@ export default function ProblemSolution() {
             </div>
             <h4 className="text-xl font-bold text-[#005461] mb-3">Hidden Ingredients</h4>
             <p className="text-gray-600 leading-relaxed">
-              Excess sodium and sugar hide in "healthy" foods. You don't feel the damage now, but your kidneys do.
+              Excess sodium and sugar hide in &ldquo;healthy&rdquo; foods. You don&#39;t feel the damage now, but your kidneys do.
             </p>
           </div>
 
@@ -96,7 +96,7 @@ export default function ProblemSolution() {
             </div>
             <h4 className="text-xl font-bold text-[#005461] mb-3">The 5-Year Lag</h4>
             <p className="text-gray-600 leading-relaxed">
-              Chronic diseases don't appear overnight. They build up silently over years of unmonitored habits.
+              Chronic diseases don&#39;t appear overnight. They build up silently over years of unmonitored habits.
             </p>
           </div>
 
@@ -106,7 +106,7 @@ export default function ProblemSolution() {
             </div>
             <h4 className="text-xl font-bold text-[#005461] mb-3">Boring Tracking</h4>
             <p className="text-gray-600 leading-relaxed">
-              Manual calorie counting feels like homework. It's tedious, abstract, and impossible to sustain.
+              Manual calorie counting feels like homework. It&#39;s tedious, abstract, and impossible to sustain.
             </p>
           </div>
 
@@ -126,7 +126,7 @@ export default function ProblemSolution() {
                 Stop Guessing. <span className="text-[#00B7B5]">Start Visualizing.</span>
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed">
-                We turn your health data into a living, breathing Avatar. See exactly how that salty meal affects your virtual kidneys in real-time.
+                We turn your health data into a &ldquo;living, breathing&rdquo; Avatar. See exactly how that salty meal affects your virtual kidneys in real-time.
               </p>
             </div>
 

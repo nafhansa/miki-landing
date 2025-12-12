@@ -101,7 +101,7 @@ export default function Pricing() {
             Pricing Plans
           </h2>
           <h3 className="text-3xl lg:text-4xl font-bold text-[#005461] leading-tight">
-            Invest in Your Body. <br /> It's the Only Place You Have to Live.
+            Invest in Your Body. <br /> It&#39;s the Only Place You Have to Live.
           </h3>
         </div>
 

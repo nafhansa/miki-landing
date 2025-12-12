@@ -1,4 +1,4 @@
-import { Activity, Instagram, Twitter, Linkedin, Github, Mail } from "lucide-react";
+import { Activity, Mail } from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
