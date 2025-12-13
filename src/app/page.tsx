@@ -2,8 +2,8 @@ import ProblemSolution from "../components/ProblemSolution";
 import Benefits from "../components/Benefits";
 import Footer from "../components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
-import StoryHero from "../components/StoryHero";
 import Nav from "../components/OverlayNav";
+import DynamicStoryHero from "../components/DynamicStoryHero";
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
       <LoadingScreen />
       <Nav />
 
-      <StoryHero />
+      <DynamicStoryHero />
       <ProblemSolution />
       <Benefits />
       <Footer />

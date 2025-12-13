@@ -114,10 +114,11 @@ export function HeroScene({ textRefs, cameraPositions = DEFAULT_CAMERA_POSITIONS
 
       <EffectComposer>
         <Bloom 
-            intensity={1.0} 
-            luminanceThreshold={0.1} 
-            luminanceSmoothing={0.9} 
-            mipmapBlur
+          intensity={0.8}
+          luminanceThreshold={0.3}
+          luminanceSmoothing={0.8}
+          mipmapBlur
+          resolutionScale={0.5}
         />
       </EffectComposer>
     </>

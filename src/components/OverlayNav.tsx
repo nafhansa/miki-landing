@@ -186,6 +186,7 @@ export default function OverlayNav() {
       <div
         ref={containerRef}
         className="pointer-events-none fixed inset-0 z-[1500] grid grid-cols-10 md:grid-cols-20 grid-rows-10 md:grid-rows-20 w-full h-full overflow-hidden opacity-0"
+        style={{ willChange: "transform, opacity" }}
       >
         {Array.from({ length: 400 }).map((_, i) => (
           <div
@@ -201,6 +202,7 @@ export default function OverlayNav() {
         className={`fixed inset-0 z-[1000] flex items-center justify-center overflow-hidden transition-opacity duration-0 ${
             isOpen ? "opacity-100 visible pointer-events-auto" : "opacity-0 invisible pointer-events-none"
         }`}
+        style={{ willChange: "transform, opacity" }}
       >
         {/* Background Gradients */}
         <div className="absolute inset-0 bg-[var(--color-bg-deep)]" />

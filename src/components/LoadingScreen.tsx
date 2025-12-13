@@ -82,6 +82,7 @@ export default function LoadingScreen() {
     <div 
       ref={containerRef} 
       className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden pointer-events-none"
+      style={{ willChange: "transform, opacity" }}
     >
       {/* Grid Overlay Background */}
       <div className="absolute inset-0 grid grid-cols-10 md:grid-cols-12 lg:grid-cols-20 grid-rows-10 md:grid-rows-12 lg:grid-rows-20 w-full h-full pointer-events-auto">
@@ -98,7 +99,6 @@ export default function LoadingScreen() {
           <span 
             key={index} 
             className="miiki-char text-6xl md:text-9xl font-black text-[#00FFFF] inline-block opacity-0"
-            style={{ willChange: "transform, opacity" }} // Performance boost
           >
             {char}
           </span>
