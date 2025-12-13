@@ -86,21 +86,21 @@ export default function Pricing() {
   ];
 
   return (
-    <section ref={containerRef} className="relative py-24 bg-[#F4F4F4] overflow-hidden min-h-screen">
+    <section ref={containerRef} className="relative py-24 bg-black text-white overflow-hidden min-h-screen">
       
       <div ref={overlayRef} className="absolute inset-0 z-30 grid grid-cols-10 md:grid-cols-20 grid-rows-10 md:grid-rows-20 w-full h-full pointer-events-none">
         {Array.from({ length: 400 }).map((_, i) => (
-          <div key={i} className="pricing-reveal-block bg-[#005461] w-full h-full border-[0.5px] border-[#005461]" />
+          <div key={i} className="pricing-reveal-block bg-[#F72585] w-full h-full border-[0.5px] border-[#F72585]" />
         ))}
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="pricing-content text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-sm font-bold tracking-widest text-[#00B7B5] uppercase mb-3">
+          <h2 className="text-sm font-bold tracking-widest text-[#CCFF00] uppercase mb-3">
             Pricing Plans
           </h2>
-          <h3 className="text-3xl lg:text-4xl font-bold text-[#005461] leading-tight">
+          <h3 className="text-3xl lg:text-4xl font-bold text-white leading-tight">
             Invest in Your Body. <br /> It&#39;s the Only Place You Have to Live.
           </h3>
         </div>
@@ -111,25 +111,25 @@ export default function Pricing() {
               key={index}
               className={`pricing-content relative p-8 rounded-[2rem] transition-all duration-300 ${
                 tier.highlight 
-                  ? "bg-[#005461] text-white shadow-2xl shadow-[#005461]/30 scale-105 z-20" 
-                  : "bg-white text-[#005461] border border-gray-100 shadow-lg hover:-translate-y-2"
+                  ? "bg-black text-white border border-white/10 scale-105 z-20" 
+                  : "bg-black text-white border border-white/10 hover:-translate-y-2"
               }`}
             >
               {tier.highlight && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#00B7B5] text-[#005461] text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#CCFF00] text-black text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">
                   Most Popular
                 </div>
               )}
 
               <div className="mb-8">
-                <h4 className={`text-xl font-bold mb-2 ${tier.highlight ? "text-[#00B7B5]" : "text-[#005461]"}`}>
+                <h4 className={`text-xl font-bold mb-2 ${tier.highlight ? "text-[#CCFF00]" : "text-white"}`}>
                   {tier.name}
                 </h4>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-bold">{tier.price}</span>
-                  {tier.period && <span className={`text-sm ${tier.highlight ? "text-gray-300" : "text-gray-500"}`}>{tier.period}</span>}
+                  {tier.period && <span className={`text-sm ${tier.highlight ? "text-gray-300" : "text-gray-400"}`}>{tier.period}</span>}
                 </div>
-                <p className={`mt-4 text-sm leading-relaxed ${tier.highlight ? "text-gray-300" : "text-gray-500"}`}>
+                <p className={`mt-4 text-sm leading-relaxed ${tier.highlight ? "text-gray-300" : "text-gray-300"}`}>
                   {tier.desc}
                 </p>
               </div>
@@ -137,15 +137,15 @@ export default function Pricing() {
               <div className="space-y-4 mb-8">
                 {tier.features.map((feature, i) => (
                   <div key={i} className="flex items-start gap-3 text-sm">
-                    <div className={`mt-0.5 rounded-full p-0.5 ${tier.highlight ? "bg-[#00B7B5] text-[#005461]" : "bg-[#005461]/10 text-[#005461]"}`}>
+                    <div className={`mt-0.5 rounded-full p-0.5 ${tier.highlight ? "bg-[#CCFF00] text-black" : "bg-white/10 text-white"}`}>
                       <Check size={12} strokeWidth={3} />
                     </div>
                     <span>{feature}</span>
                   </div>
                 ))}
                 {tier.notIncluded.map((feature, i) => (
-                  <div key={i} className={`flex items-start gap-3 text-sm ${tier.highlight ? "text-gray-500" : "text-gray-400"}`}>
-                    <div className="mt-0.5 rounded-full p-0.5 bg-gray-200 text-gray-400">
+                  <div key={i} className={`flex items-start gap-3 text-sm ${tier.highlight ? "text-gray-500" : "text-gray-500"}`}>
+                    <div className="mt-0.5 rounded-full p-0.5 bg-white/10 text-gray-400">
                       <X size={12} strokeWidth={3} />
                     </div>
                     <span className="line-through">{feature}</span>
@@ -155,8 +155,8 @@ export default function Pricing() {
 
               <button className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
                 tier.highlight 
-                  ? "bg-[#00B7B5] hover:bg-white hover:text-[#005461] text-[#005461]" 
-                  : "bg-[#005461] hover:bg-[#00B7B5] text-white"
+                  ? "border border-white text-white bg-transparent hover:bg-[#CCFF00] hover:text-black" 
+                  : "border border-white text-white bg-transparent hover:bg-[#F72585] hover:text-black"
               }`}>
                 {tier.cta}
                 <Zap size={18} />

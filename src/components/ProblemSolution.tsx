@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function ProblemSolution() {
   const sectionRef = useRef(null);
   const triggerRef = useRef(null);
+  const solutionRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -66,14 +67,14 @@ export default function ProblemSolution() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-white overflow-hidden">
+    <section ref={sectionRef} className="py-24 bg-black text-white overflow-hidden">
       <div ref={triggerRef} className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="gsap-title text-sm font-bold tracking-widest text-[#00B7B5] uppercase mb-3">
+          <h2 className="gsap-title text-sm font-bold tracking-widest text-[#CCFF00] uppercase mb-3">
             The Invisible Problem
           </h2>
-          <h3 className="gsap-title text-3xl lg:text-4xl font-bold text-[#005461] leading-tight">
+          <h3 className="gsap-title text-3xl lg:text-4xl font-bold text-white leading-tight">
             You Are Eating Blindly, and Your <br/> Future Self is Paying the Price.
           </h3>
         </div>
@@ -113,17 +114,32 @@ export default function ProblemSolution() {
         </div>
 
         <div className="gsap-solution-trigger relative w-full max-w-5xl mx-auto">
-          <div className="gsap-solution relative bg-[#005461] rounded-[3rem] p-8 md:p-12 overflow-hidden text-white text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-10 shadow-2xl shadow-[#005461]/30">
-            
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#00B7B5] rounded-full blur-[80px] opacity-20 -mr-16 -mt-16 pointer-events-none"></div>
+          <div
+            ref={solutionRef}
+            onMouseMove={(e) => {
+              const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const y = e.clientY - rect.top;
+              (e.currentTarget as HTMLDivElement).style.setProperty('--mx', x + 'px');
+              (e.currentTarget as HTMLDivElement).style.setProperty('--my', y + 'px');
+            }}
+            className="gsap-solution relative bg-black rounded-[3rem] p-8 md:p-12 overflow-hidden text-white text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-10 border border-white/10"
+          >
+            <div
+              className="absolute inset-0 pointer-events-none rounded-[3rem]"
+              style={{
+                background:
+                  'radial-gradient(500px circle at var(--mx) var(--my), rgba(247,37,133,0.25), rgba(247,37,133,0) 60%)'
+              }}
+            ></div>
             
             <div className="z-10 max-w-lg">
               <div className="flex items-center gap-2 mb-4 justify-center md:justify-start opacity-80">
-                <ShieldCheck size={20} className="text-[#00B7B5]" />
+                <ShieldCheck size={20} className="text-[#F72585]" />
                 <span className="font-semibold tracking-wide text-sm uppercase">The Solution</span>
               </div>
               <h3 className="text-3xl font-bold mb-4">
-                Stop Guessing. <span className="text-[#00B7B5]">Start Visualizing.</span>
+                Stop Guessing. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F72585] via-[#F8961E] to-[#CCFF00]">Start Visualizing.</span>
               </h3>
               <p className="text-gray-300 text-lg leading-relaxed">
                 We turn your health data into a &ldquo;living, breathing&rdquo; Avatar. See exactly how that salty meal affects your virtual kidneys in real-time.
@@ -131,7 +147,7 @@ export default function ProblemSolution() {
             </div>
 
             <div className="z-10 flex-shrink-0">
-              <button className="flex items-center gap-3 bg-white text-[#005461] px-8 py-4 rounded-xl font-bold hover:bg-[#00B7B5] hover:text-white transition-all duration-300 shadow-lg">
+              <button className="flex items-center gap-3 border border-white text-white px-8 py-4 rounded-xl font-bold bg-transparent hover:bg-[#CCFF00] hover:text-black transition-all duration-300">
                 See How It Works
                 <ArrowRight size={20} />
               </button>

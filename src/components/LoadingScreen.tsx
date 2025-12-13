@@ -40,7 +40,7 @@ export default function LoadingScreen() {
         }
       })
       .to(letters, {
-        textShadow: "0 0 30px #00B7B5",
+        textShadow: "0 0 30px #CCFF00",
         color: "#ffffff",
         scale: 1.1,
         duration: 0.2,
@@ -79,7 +79,7 @@ export default function LoadingScreen() {
     >
       <div className="absolute inset-0 grid grid-cols-10 md:grid-cols-12 lg:grid-cols-20 grid-rows-10 md:grid-rows-12 lg:grid-rows-20 w-full h-full">
         {Array.from({ length: 400 }).map((_, i) => (
-          <div key={i} className="reveal-block bg-[#005461] w-full h-full border-[0.5px] border-[#005461]" />
+          <div key={i} className="reveal-block bg-[#F72585] w-full h-full border-[0.5px] border-[#F72585]" />
         ))}
       </div>
 
@@ -87,7 +87,7 @@ export default function LoadingScreen() {
         {["M", "I", "I", "K", "I"].map((char, index) => (
           <span 
             key={index} 
-            className="miiki-char text-6xl md:text-9xl font-black text-[#00B7B5] inline-block opacity-0"
+            className="miiki-char text-6xl md:text-9xl font-black text-[#CCFF00] inline-block opacity-0"
           >
             {char}
           </span>
