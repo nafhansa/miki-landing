@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -8,9 +8,13 @@ export function SpeedLines() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const count = 140;
   const dummyRef = useRef<THREE.Object3D>(new THREE.Object3D());
+  
+  // Data refs
   const positionsRef = useRef<Float32Array>(new Float32Array(count * 3));
   const velocitiesRef = useRef<Float32Array>(new Float32Array(count));
   const scaleZRef = useRef<Float32Array>(new Float32Array(count));
+  
+  // Config
   const frontZ = 20;
   const backZ = -20;
   const spreadX = 2;
@@ -18,11 +22,18 @@ export function SpeedLines() {
   const safeX = 0.5;
   const safeY = 1.5;
 
+  // --- TRICK NEON ---
+  // 1. Gunakan Cyan murni (#00FFFF) atau Electric Blue (#0055FF)
+  // 2. MultiplyScalar(10) -> Paksa intensitas cahaya jadi 10x lipat (Overdrive)
+  const neonColor = useMemo(() => new THREE.Color("#00FFFF").multiplyScalar(5), []);
+
   useEffect(() => {
     const positions = positionsRef.current;
     const velocities = velocitiesRef.current;
     const scaleZ = scaleZRef.current;
+
     for (let i = 0; i < count; i++) {
+      // Logic sebaran posisi (tetap sama dengan kodemu karena movement-nya sudah oke)
       let x = (Math.random() * 2 - 1) * spreadX;
       let y = (Math.random() * 2 - 1) * spreadY;
       while (Math.abs(x) < safeX && Math.abs(y) < safeY) {
@@ -30,12 +41,14 @@ export function SpeedLines() {
         y = (Math.random() * 2 - 1) * spreadY;
       }
       const z = Math.random() * (frontZ - backZ) + backZ;
+      
       positions[i * 3] = x;
       positions[i * 3 + 1] = y;
       positions[i * 3 + 2] = z;
       velocities[i] = Math.random() * 0.2 + 0.2;
       scaleZ[i] = Math.random() * 5 + 2;
     }
+
     if (meshRef.current) {
       const dummy = dummyRef.current;
       for (let i = 0; i < count; i++) {
@@ -60,11 +73,15 @@ export function SpeedLines() {
     const dummy = dummyRef.current;
 
     for (let i = 0; i < count; i++) {
+      // Update posisi Z maju/mundur
       positions[i * 3 + 2] -= velocities[i] * (delta * 40);
+      
+      // Reset kalau lewat batas
       if (positions[i * 3 + 2] < backZ) {
         positions[i * 3 + 2] = frontZ;
       }
 
+      // Safety check area tengah
       const x = positions[i * 3];
       const y = positions[i * 3 + 1];
       if (Math.abs(x) < 0.5 && Math.abs(y) < 1.5) {
@@ -85,13 +102,15 @@ export function SpeedLines() {
       args={[undefined, undefined, count]} 
       frustumCulled={false}
     >
-      <boxGeometry args={[0.01, 0.01, 1]} />
+      <boxGeometry args={[0.02, 0.02, 1]} /> {/* Sedikit ditebalkan (0.01 -> 0.02) biar lebih kelihatan warnanya */}
+      
       <meshBasicMaterial 
-        color="#CCFF00"
+        color={neonColor} 
         transparent 
-        opacity={0.2} 
+        opacity={0.6} // Opacity dinaikkan sedikit biar warna solid-nya dapet
         blending={THREE.AdditiveBlending}
-        depthWrite={false} 
+        depthWrite={false}
+        toneMapped={false} // <--- INI PENTING! Biar warnanya gak di-clamp jadi putih tumpul
       />
     </instancedMesh>
   );

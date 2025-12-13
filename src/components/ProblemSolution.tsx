@@ -12,19 +12,19 @@ const PROBLEMS = [
     icon: <AlertTriangle size={32} />,
     title: "Hidden Ingredients",
     desc: "Excess sodium & sugar hide in 'healthy' foods.",
-    color: "text-red-500",
-    bg: "bg-red-500/10",
-    borderColor: "group-hover:border-red-500/50",
-    shadow: "group-hover:shadow-[0_0_50px_-10px_rgba(239,68,68,0.5)]"
+    color: "text-purple-normal",
+    bg: "bg-purple-normal/10",
+    borderColor: "group-hover:border-purple-normal/50",
+    shadow: "group-hover:shadow-[0_0_50px_-10px_rgba(var(--color-purple-normal-rgb),0.5)]"
   },
   {
     icon: <Clock size={32} />,
     title: "The 5-Year Lag",
     desc: "Chronic diseases build up silently over years.",
-    color: "text-orange-500",
-    bg: "bg-orange-500/10",
-    borderColor: "group-hover:border-orange-500/50",
-    shadow: "group-hover:shadow-[0_0_50px_-10px_rgba(249,115,22,0.5)]"
+    color: "text-dpurple-normal",
+    bg: "bg-dpurple-normal/10",
+    borderColor: "group-hover:border-dpurple-normal/50",
+    shadow: "group-hover:shadow-[0_0_50px_-10px_rgba(var(--color-dpurple-normal-rgb),0.5)]"
   },
   {
     icon: <FileWarning size={32} />,
@@ -135,7 +135,7 @@ export default function ProblemSolution() {
       <div ref={triggerRef} className="w-full h-screen flex flex-col items-center justify-center py-10 overflow-hidden">
         
         <div className="section-title text-center mb-8 relative z-10 px-4 transition-opacity">
-          <h2 className="text-xs md:text-sm font-bold tracking-[0.2em] text-[#CCFF00] uppercase mb-3">
+          <h2 className="text-xs md:text-sm font-bold tracking-[0.2em] text-blue-normal uppercase mb-3">
             The Invisible Problem
           </h2>
           <h3 className="text-3xl md:text-5xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
@@ -180,7 +180,7 @@ export default function ProblemSolution() {
                     {item.icon}
                   </div>
                   
-                  <h4 className="text-lg md:text-2xl font-bold text-white mb-2 md:mb-4 group-hover:text-[#CCFF00] transition-colors duration-300">
+                  <h4 className="text-lg md:text-2xl font-bold text-white mb-2 md:mb-4 group-hover:text-blue-normal transition-colors duration-300">
                     {item.title}
                   </h4>
                   <p className="text-gray-400 leading-relaxed text-xs md:text-lg">

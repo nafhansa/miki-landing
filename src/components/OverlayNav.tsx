@@ -12,9 +12,8 @@ export default function OverlayNav() {
   const router = useRouter();
 
   const theme = {
-    red: "#F72585",
-    blue: "#0055ff",
-    dark: "#050505",
+    accent: "var(--color-blue-normal)",
+    dark: "var(--color-bg-deep)",
     white: "#ffffff",
   };
 
@@ -166,19 +165,19 @@ export default function OverlayNav() {
     <>
       <button
         onClick={toggleMenu}
-        className="fixed right-8 top-8 z-[2000] flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md transition-all duration-300 hover:border-[#F72585] hover:bg-black/80 hover:shadow-[0_0_20px_rgba(247,37,133,0.4)] active:scale-95"
+        className="fixed right-8 top-8 z-[2000] flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md transition-all duration-300 hover:border-blue-normal hover:bg-black/80 hover:shadow-[0_0_20px_rgba(var(--color-blue-normal-rgb),0.4)] active:scale-95"
       >
         <div className="flex flex-col gap-1.5">
             <span 
-                className={`block h-[2px] w-6 bg-white transition-all duration-300 ${isOpen ? "rotate-45 translate-y-2 bg-[#F72585]" : ""}`} 
-                style={{ boxShadow: isOpen ? `0 0 10px ${theme.red}` : "none" }}
+                className={`block h-[2px] w-6 bg-white transition-all duration-300 ${isOpen ? "rotate-45 translate-y-2 bg-blue-normal" : ""}`} 
+                style={{ boxShadow: isOpen ? `0 0 10px ${theme.accent}` : "none" }}
             />
             <span 
                 className={`block h-[2px] w-4 bg-white transition-all duration-300 self-end ${isOpen ? "opacity-0" : ""}`} 
             />
             <span 
-                className={`block h-[2px] w-6 bg-white transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-2 bg-[#F72585]" : ""}`} 
-                style={{ boxShadow: isOpen ? `0 0 10px ${theme.red}` : "none" }}
+                className={`block h-[2px] w-6 bg-white transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-2 bg-blue-normal" : ""}`} 
+                style={{ boxShadow: isOpen ? `0 0 10px ${theme.accent}` : "none" }}
             />
         </div>
       </button>
@@ -191,7 +190,7 @@ export default function OverlayNav() {
         {Array.from({ length: 400 }).map((_, i) => (
           <div
             key={i}
-            className="overlay-reveal-block bg-[#F72585] w-full h-full border-[0.5px] border-[#F72585]"
+            className="overlay-reveal-block bg-blue-normal w-full h-full border-[0.5px] border-blue-normal"
           />
         ))}
       </div>
@@ -204,45 +203,45 @@ export default function OverlayNav() {
         }`}
       >
         {/* Background Gradients */}
-        <div className="absolute inset-0 bg-[#050510]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a0b2e] via-[#050510] to-[#050510]" />
+        <div className="absolute inset-0 bg-[var(--color-bg-deep)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a0b2e] via-[var(--color-bg-deep)] to-[var(--color-bg-deep)]" />
         
         {/* Menu Items Container */}
         <div className="relative z-10 flex flex-col items-center gap-2 text-center">
             
             {/* HOME */}
             <div className="group overlay-menu-item relative overflow-hidden p-2">
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-[#F72585] group-hover:opacity-0 md:-left-8">01</span>
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-blue-normal group-hover:opacity-0 md:-left-8">01</span>
                 <button onClick={handleHome} className="menu-btn relative block font-black uppercase italic tracking-tighter text-white transition-all duration-300 hover:tracking-widest" style={{ fontSize: "clamp(2.5rem, 5vw, 5rem)", lineHeight: 0.9 }}>
                     <span className="relative z-10 transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-500">HOME</span>
-                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.red}`, color: "transparent", textShadow: `0 0 10px ${theme.red}` }}>HOME</span>
+                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.accent}`, color: "transparent", textShadow: `0 0 10px ${theme.accent}` }}>HOME</span>
                 </button>
             </div>
 
             {/* PRICING */}
             <div className="group overlay-menu-item relative overflow-hidden p-2">
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-[#F72585] group-hover:opacity-0 md:-left-8">02</span>
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-blue-normal group-hover:opacity-0 md:-left-8">02</span>
                 <button onClick={handlePricing} className="menu-btn relative block font-black uppercase italic tracking-tighter text-white transition-all duration-300 hover:tracking-widest" style={{ fontSize: "clamp(2.5rem, 5vw, 5rem)", lineHeight: 0.9 }}>
                     <span className="relative z-10 transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-500">PRICING</span>
-                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.red}`, color: "transparent", textShadow: `0 0 10px ${theme.red}` }}>PRICING</span>
+                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.accent}`, color: "transparent", textShadow: `0 0 10px ${theme.accent}` }}>PRICING</span>
                 </button>
             </div>
 
             {/* DOWNLOADS */}
             <div className="group overlay-menu-item relative overflow-hidden p-2">
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-[#F72585] group-hover:opacity-0 md:-left-8">03</span>
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-blue-normal group-hover:opacity-0 md:-left-8">03</span>
                 <button onClick={handleDownloads} className="menu-btn relative block font-black uppercase italic tracking-tighter text-white transition-all duration-300 hover:tracking-widest" style={{ fontSize: "clamp(2.5rem, 5vw, 5rem)", lineHeight: 0.9 }}>
                     <span className="relative z-10 transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-500">DOWNLOADS</span>
-                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.red}`, color: "transparent", textShadow: `0 0 10px ${theme.red}` }}>DOWNLOADS</span>
+                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.accent}`, color: "transparent", textShadow: `0 0 10px ${theme.accent}` }}>DOWNLOADS</span>
                 </button>
             </div>
 
             {/* LOGIN (NEW) */}
             <div className="group overlay-menu-item relative overflow-hidden p-2">
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-[#F72585] group-hover:opacity-0 md:-left-8">04</span>
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-blue-normal group-hover:opacity-0 md:-left-8">04</span>
                 <button onClick={handleLogin} className="menu-btn relative block font-black uppercase italic tracking-tighter text-white transition-all duration-300 hover:tracking-widest" style={{ fontSize: "clamp(2.5rem, 5vw, 5rem)", lineHeight: 0.9 }}>
                     <span className="relative z-10 transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-500">LOGIN</span>
-                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.red}`, color: "transparent", textShadow: `0 0 10px ${theme.red}` }}>LOGIN</span>
+                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.accent}`, color: "transparent", textShadow: `0 0 10px ${theme.accent}` }}>LOGIN</span>
                 </button>
             </div>
 

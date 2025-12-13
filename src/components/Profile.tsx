@@ -26,7 +26,7 @@ export default function ProfilePage() {
                {/* Placeholder Avatar */}
               <User size={40} className="text-gray-500" />
             </div>
-            <div className="absolute bottom-0 right-0 w-8 h-8 bg-[#CCFF00] rounded-full flex items-center justify-center border-4 border-black">
+            <div className="absolute bottom-0 right-0 w-8 h-8 bg-blue-normal rounded-full flex items-center justify-center border-4 border-black">
               <Settings size={14} className="text-black" />
             </div>
           </div>
@@ -36,7 +36,7 @@ export default function ProfilePage() {
             <h1 className="text-3xl font-bold mb-1">Alex Sander</h1>
             <p className="text-gray-400 text-sm mb-4">alex.sander@example.com</p>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-zinc-900 rounded-full border border-white/10">
-              <div className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-blue-normal animate-pulse" />
               <span className="text-xs font-mono text-gray-300 uppercase tracking-wider">Member since 2023</span>
             </div>
           </div>
@@ -56,24 +56,24 @@ export default function ProfilePage() {
             {/* Active Plan Card */}
             <section>
               <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-                <Zap size={18} className="text-[#CCFF00]" /> 
+                <Zap size={18} className="text-blue-normal" /> 
                 Current Plan
               </h2>
               
               <div className="relative bg-zinc-900 rounded-3xl p-6 md:p-8 border border-white/10 overflow-hidden group hover:border-white/20 transition-all">
                 {/* Background Glow */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#F72585]/10 blur-[80px] rounded-full pointer-events-none" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-normal/10 blur-[80px] rounded-full pointer-events-none" />
                 
                 <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
                   <div>
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-3xl font-bold">Pro Plan</span>
-                      <span className="px-2 py-0.5 bg-[#F72585] text-white text-[10px] font-bold uppercase tracking-wider rounded">Active</span>
+                      <span className="px-2 py-0.5 bg-blue-normal text-black text-[10px] font-bold uppercase tracking-wider rounded">Active</span>
                     </div>
                     <p className="text-gray-400 text-sm">Billed annually. Next payment on <span className="text-white">Dec 14, 2026</span></p>
                   </div>
                   <div className="text-left md:text-right">
-                    <div className="text-2xl font-bold text-[#CCFF00]">$99<span className="text-sm text-gray-400 font-normal">/year</span></div>
+                    <div className="text-2xl font-bold text-blue-normal">$99<span className="text-sm text-gray-400 font-normal">/year</span></div>
                   </div>
                 </div>
 
@@ -84,13 +84,13 @@ export default function ProfilePage() {
                     <span className="text-white font-mono">85 / 100</span>
                   </div>
                   <div className="w-full h-2 bg-black rounded-full overflow-hidden border border-white/5">
-                    <div className="h-full w-[85%] bg-gradient-to-r from-[#CCFF00] to-[#F72585]" />
+                    <div className="h-full w-[85%] bg-gradient-to-r from-blue-normal to-dpurple-normal" />
                   </div>
                 </div>
 
                 {/* Actions */}
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <button className="flex-1 bg-white text-black font-bold py-3 px-4 rounded-xl hover:bg-[#CCFF00] transition-colors text-sm">
+                  <button className="flex-1 bg-white text-black font-bold py-3 px-4 rounded-xl hover:bg-blue-normal transition-colors text-sm">
                     Manage Subscription
                   </button>
                   <button className="flex-1 bg-transparent border border-white/20 text-white font-bold py-3 px-4 rounded-xl hover:bg-white/5 transition-colors text-sm">
@@ -124,7 +124,7 @@ export default function ProfilePage() {
                     </div>
                     <div className="text-right">
                       <div className="font-mono text-sm">{item.amount}</div>
-                      <div className="text-[10px] text-[#CCFF00]">{item.status}</div>
+                      <div className="text-[10px] text-blue-normal">{item.status}</div>
                     </div>
                   </div>
                 ))}
@@ -176,7 +176,7 @@ export default function ProfilePage() {
                   "Priority AI Support"
                 ].map((feature, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
-                    <CheckCircle2 size={16} className="text-[#CCFF00] shrink-0 mt-0.5" />
+                    <CheckCircle2 size={16} className="text-blue-normal shrink-0 mt-0.5" />
                     {feature}
                   </li>
                 ))}
