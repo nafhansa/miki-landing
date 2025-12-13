@@ -94,7 +94,7 @@ export default function StoryHero() {
   }, []);
 
   return (
-    <div ref={containerRef} className="story-container relative h-[400vh] bg-black text-white">
+    <div id="hero" ref={containerRef} className="story-container relative h-[400vh] bg-black text-white">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
           <Canvas shadows className="bg-black">
