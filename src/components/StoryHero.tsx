@@ -1,11 +1,9 @@
 'use client';
 
-import React, { useLayoutEffect, useRef, forwardRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { AdaptiveDpr, PerformanceMonitor } from '@react-three/drei';
+import React, { useLayoutEffect, useMemo, useRef, forwardRef } from 'react';
+import { Canvas } from '@react-three/offscreen';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { HeroScene } from './HeroScene';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -82,35 +80,54 @@ export default function StoryHero() {
   const text3Ref = useRef<HTMLDivElement>(null);
   const text4Ref = useRef<HTMLDivElement>(null);
   const textRefs = [text1Ref, text2Ref, text3Ref, text4Ref];
+  const worker = useMemo(() => new Worker(new URL('./worker/Scene.tsx', import.meta.url), { type: 'module' }), []);
 
   useLayoutEffect(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: '.story-container', start: 'top top', end: 'bottom bottom', scrub: 1.5 }
+    });
+
+    tl.set(textRefs[0].current, { opacity: 1, y: 0 })
+      .to(textRefs[0].current, { opacity: 0, y: -50, duration: 1 })
+      .fromTo(textRefs[1].current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.5 })
+      .to(textRefs[1].current, { opacity: 0, x: -50, duration: 0.5 })
+      .fromTo(textRefs[2].current, { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.5 })
+      .to(textRefs[2].current, { opacity: 0, duration: 0.5 })
+      .fromTo(textRefs[3].current, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5 });
+
     const st = ScrollTrigger.create({
       trigger: '.story-container',
       start: 'top top',
       end: 'bottom bottom',
+      scrub: 1.5,
+      onUpdate: (self) => {
+        worker.postMessage({ type: 'scroll', value: self.progress });
+      }
     });
+
     return () => {
+      tl.kill();
       st.kill();
+      worker.terminate();
     };
-  }, []);
+  }, [worker, textRefs]);
 
   return (
     <div id="hero" ref={containerRef} className="story-container relative h-[400vh] bg-black text-white">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
           <Canvas 
-            shadows 
-            className="bg-black" 
-            dpr={[1, 1.5]} 
-            gl={{ antialias: true, alpha: true, powerPreference: "default" }} 
-            onCreated={({ gl }) => { 
-              console.log("✅ WebGL Context Created:", gl.info.render); 
-            }} 
-          >
-            <AdaptiveDpr />
-            <PerformanceMonitor onChange={({ factor }) => console.log("⚡ Perf Factor:", factor)} />
-            <HeroScene textRefs={textRefs} />
-          </Canvas>
+            className="bg-black"
+            worker={worker}
+            shadows
+            dpr={[1, 1.5]}
+            gl={{ antialias: true, alpha: true, powerPreference: 'default' }}
+            fallback={
+              <div className="w-full h-full flex items-center justify-center bg-black">
+                <div className="text-gray-400 text-sm">Loading scene...</div>
+              </div>
+            }
+          />
         </div>
         <div className="absolute inset-0 w-full h-full z-50 pointer-events-none">
           <StartOverlay ref={text1Ref} />

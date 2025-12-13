@@ -9,10 +9,29 @@ type GLTFResult = {
   animations: AnimationClip[];
 };
 
+function getBaseUrl(): string {
+  if (typeof window !== 'undefined' && window.location) {
+    return window.location.origin;
+  }
+  if (typeof self !== 'undefined' && 'location' in self) {
+    const loc = (self as any).location;
+    const origin = loc.origin ?? `${loc.protocol}//${loc.host}`;
+    return origin;
+  }
+  return '';
+}
+
+function getModelUrl(): string {
+  const base = getBaseUrl();
+  const path = '/male_running_20_frames_loop.glb';
+  return `${base}${path}`;
+}
+
 export function RunningMan(props: React.JSX.IntrinsicElements['group']) {
   const group = useRef<Group>(null);
 
-  const { scene, animations } = useGLTF('/male_running_20_frames_loop.glb') as unknown as GLTFResult;
+  const url = getModelUrl();
+  const { scene, animations } = useGLTF(url) as unknown as GLTFResult;
   
   const { actions, names } = useAnimations(animations, group);
 
@@ -29,4 +48,4 @@ export function RunningMan(props: React.JSX.IntrinsicElements['group']) {
   );
 }
 
-useGLTF.preload('/male_running_20_frames_loop.glb');
+useGLTF.preload(getModelUrl());
