@@ -146,11 +146,13 @@ export default function ProblemSolution() {
         <div 
           ref={cardsRef} 
           className="flex flex-col md:flex-row w-full max-w-6xl h-[65vh] md:h-[60vh] px-6 md:px-0 will-change-transform"
+          style={{ willChange: "transform" }}
         >
           {PROBLEMS.map((item, index) => (
             <div 
               key={index} 
               className="problem-card relative flex-1 w-full md:w-auto group perspective-1000"
+              style={{ willChange: "transform, opacity" }}
             >
               <div 
                 className={`
@@ -158,6 +160,7 @@ export default function ProblemSolution() {
                   transition-all duration-500 ease-out transform-style-3d 
                   ${item.shadow} 
                 `}
+                style={{ willChange: "transform" }}
                 // HAPUS overflow-hidden DARI SINI !!!
                 // HAPUS class border juga dari sini
               >
@@ -165,6 +168,7 @@ export default function ProblemSolution() {
                 {/* --- FRONT SIDE --- */}
                 <div 
                   className="card-front absolute inset-0 w-full h-full backface-hidden overflow-hidden bg-gray-900 z-[1]"
+                  style={{ willChange: "transform" }}
                 >
                   <div 
                     className="absolute inset-0 w-full h-full puzzle-bg"
@@ -175,6 +179,7 @@ export default function ProblemSolution() {
                 {/* --- BACK SIDE --- */}
                 <div 
                   className="card-back absolute inset-0 w-full h-full backface-hidden overflow-hidden bg-[#111] p-6 md:p-8 flex flex-col justify-center items-center text-center z-[1]"
+                  style={{ willChange: "transform, opacity" }}
                 >
                   <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-3 md:mb-6 ${item.bg} ${item.color} shadow-inner`}>
                     {item.icon}
@@ -200,6 +205,7 @@ export default function ProblemSolution() {
                     transition-colors duration-300 translate-z-[1px]
                     ${item.borderColor}
                   `}
+                  style={{ willChange: "transform, opacity" }}
                 />
 
               </div>

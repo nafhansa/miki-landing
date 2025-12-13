@@ -2,6 +2,7 @@
 
 import React, { useLayoutEffect, useRef, forwardRef } from 'react';
 import { Canvas } from '@react-three/fiber';
+import { AdaptiveDpr, PerformanceMonitor } from '@react-three/drei';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { HeroScene } from './HeroScene';
@@ -14,7 +15,7 @@ const StartOverlay = forwardRef<HTMLDivElement, OverlayProps>(function StartOver
   return (
     <div 
       ref={ref as React.RefObject<HTMLDivElement>} 
-      className="absolute left-4 md:left-10 top-35 md:top-20 max-w-3xl opacity-100"
+      className="absolute left-4 md:left-10 top-35 md:top-20 max-w-3xl opacity-100 will-change-transform"
     >
       <div className="flex items-center gap-2 mb-4">
         <span className="w-8 h-[2px] bg-blue-normal"></span>
@@ -40,7 +41,7 @@ const StartOverlay = forwardRef<HTMLDivElement, OverlayProps>(function StartOver
 
 const TopOverlay = forwardRef<HTMLDivElement, OverlayProps>(function TopOverlay(_, ref) {
   return (
-    <div ref={ref as React.RefObject<HTMLDivElement>} className="absolute right-8 md:right-24 top-1/3 max-w-md p-6 opacity-0 text-right">
+    <div ref={ref as React.RefObject<HTMLDivElement>} className="absolute right-8 md:right-24 top-1/3 max-w-md p-6 opacity-0 text-right will-change-transform" style={{ willChange: "transform, opacity" }}>
       <span className="text-purple-normal font-mono text-xs tracking-[0.2em] uppercase mb-3 block">02 — The Intelligence</span>
       <h2 className="text-5xl font-bold text-white mb-4 tracking-tight">Scan The<br />Nutritions</h2>
       <p className="text-gray-300 text-lg leading-relaxed">
@@ -52,7 +53,7 @@ const TopOverlay = forwardRef<HTMLDivElement, OverlayProps>(function TopOverlay(
 
 const SideOverlay = forwardRef<HTMLDivElement, OverlayProps>(function SideOverlay(_, ref) {
   return (
-    <div ref={ref as React.RefObject<HTMLDivElement>} className="absolute left-8 md:left-24 top-1/3 max-w-md p-6 opacity-0">
+    <div ref={ref as React.RefObject<HTMLDivElement>} className="absolute left-8 md:left-24 top-1/3 max-w-md p-6 opacity-0 will-change-transform" style={{ willChange: "transform, opacity" }}>
       <span className="text-dpurple-normal font-mono text-xs tracking-[0.2em] uppercase mb-3 block">03 — The Ecosystem</span>
       <h2 className="text-5xl font-bold text-white mb-4 tracking-tight">Sync Your<br />Reality</h2>
       <p className="text-gray-300 text-lg leading-relaxed">
@@ -64,7 +65,7 @@ const SideOverlay = forwardRef<HTMLDivElement, OverlayProps>(function SideOverla
 
 const FrontOverlay = forwardRef<HTMLDivElement, OverlayProps>(function FrontOverlay(_, ref) {
   return (
-    <div ref={ref as React.RefObject<HTMLDivElement>} className="absolute bottom-16 md:bottom-24 left-0 right-0 mx-auto text-center max-w-2xl p-6 opacity-0 flex flex-col items-center">
+    <div ref={ref as React.RefObject<HTMLDivElement>} className="absolute bottom-16 md:bottom-24 left-0 right-0 mx-auto text-center max-w-2xl p-6 opacity-0 flex flex-col items-center will-change-transform" style={{ willChange: "transform, opacity" }}>
       <span className="text-blue-normal font-mono text-xs tracking-[0.2em] uppercase mb-3 block">04 — The Evolution</span>
       <h2 className="text-5xl font-bold text-white mb-4 tracking-tight">Meet Your<br />Avatar</h2>
       <p className="text-gray-300 text-lg leading-relaxed">
@@ -97,7 +98,17 @@ export default function StoryHero() {
     <div id="hero" ref={containerRef} className="story-container relative h-[400vh] bg-black text-white">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <div className="absolute inset-0 w-full h-full z-0">
-          <Canvas shadows className="bg-black">
+          <Canvas 
+            shadows 
+            className="bg-black" 
+            dpr={[1, 1.5]} 
+            gl={{ antialias: true, alpha: true, powerPreference: "default" }} 
+            onCreated={({ gl }) => { 
+              console.log("✅ WebGL Context Created:", gl.info.render); 
+            }} 
+          >
+            <AdaptiveDpr />
+            <PerformanceMonitor onChange={({ factor }) => console.log("⚡ Perf Factor:", factor)} />
             <HeroScene textRefs={textRefs} />
           </Canvas>
         </div>

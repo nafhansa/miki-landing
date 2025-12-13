@@ -75,7 +75,7 @@ export default function DownloadPage() {
       <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         
         {/* --- LEFT COLUMN: TEXT --- */}
-        <div className="max-w-xl relative z-30 mx-auto lg:mx-0 text-center lg:text-left">
+        <div className="max-w-xl relative z-30 mx-auto lg:mx-0 text-center lg:text-left" style={{ willChange: "transform, opacity" }}>
           
           <div className="hero-text-element flex items-center justify-center lg:justify-start gap-2 mb-6">
             <span className="px-3 py-1 bg-blue-normal/10 border border-blue-normal/30 text-blue-normal text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full">Available Now</span>
@@ -83,16 +83,16 @@ export default function DownloadPage() {
           </div>
 
           {/* FIX FONT SIZE MOBILE: text-4xl biar gak terlalu bongsor di HP */}
-          <h1 className="hero-text-element text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6">
+          <h1 className="hero-text-element text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6" style={{ willChange: "transform, opacity" }}>
             Your Body, <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">Digitized.</span>
           </h1>
 
-          <p className="hero-text-element text-gray-400 text-base md:text-lg mb-8 md:mb-10 leading-relaxed max-w-md mx-auto lg:mx-0">
+          <p className="hero-text-element text-gray-400 text-base md:text-lg mb-8 md:mb-10 leading-relaxed max-w-md mx-auto lg:mx-0" style={{ willChange: "transform, opacity" }}>
             Stop guessing what your food does to you. Download the app to scan meals, simulate organ health, and predict your future self with AI precision.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 mb-12 justify-center lg:justify-start">
+          <div className="flex flex-col sm:flex-row gap-4 mb-12 justify-center lg:justify-start" style={{ willChange: "transform, opacity" }}>
             <button className="store-button group relative bg-white text-black px-5 py-3 rounded-xl flex items-center justify-center gap-3 transition-all hover:bg-blue-normal hover:shadow-[0_0_20px_rgba(var(--color-blue-normal-rgb),0.4)] w-full sm:w-auto">
               <Apple size={28} className="shrink-0" />
               <div className="text-left">
@@ -120,7 +120,7 @@ export default function DownloadPage() {
 
         {/* --- RIGHT COLUMN: PHONE MOCKUP --- */}
         {/* z-20 agar di bawah teks, flex center */}
-        <div ref={phoneRef} className="relative z-20 flex md:mr-20 justify-center lg:justify-end lg:pr-10 mt-8 lg:mt-0">
+        <div ref={phoneRef} className="relative z-20 flex md:mr-20 justify-center lg:justify-end lg:pr-10 mt-8 lg:mt-0" style={{ willChange: "transform, opacity" }}>
           
           <div className="bg-glow-pulse absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[300px] h-[400px] md:h-[500px] bg-dpurple-normal blur-[100px] opacity-40 rounded-full pointer-events-none" />
 
