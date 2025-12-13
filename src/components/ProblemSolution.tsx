@@ -7,34 +7,33 @@ import { AlertTriangle, Clock, FileWarning } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --- DATA KONTEN (MASIH LENGKAP) ---
 const PROBLEMS = [
   {
     icon: <AlertTriangle size={32} />,
     title: "Hidden Ingredients",
-    desc: "Excess sodium & sugar hide in 'healthy' foods. You don't feel the damage now, but your kidneys do.",
+    desc: "Excess sodium & sugar hide in 'healthy' foods.",
     color: "text-red-500",
     bg: "bg-red-500/10",
-    // Glow Merah
-    glowClass: "group-hover:shadow-[0_0_50px_-10px_rgba(239,68,68,0.5)] group-hover:border-red-500/50"
+    borderColor: "group-hover:border-red-500/50",
+    shadow: "group-hover:shadow-[0_0_50px_-10px_rgba(239,68,68,0.5)]"
   },
   {
     icon: <Clock size={32} />,
     title: "The 5-Year Lag",
-    desc: "Chronic diseases don't appear overnight. They build up silently over years of unmonitored habits.",
+    desc: "Chronic diseases build up silently over years.",
     color: "text-orange-500",
     bg: "bg-orange-500/10",
-    // Glow Orange
-    glowClass: "group-hover:shadow-[0_0_50px_-10px_rgba(249,115,22,0.5)] group-hover:border-orange-500/50"
+    borderColor: "group-hover:border-orange-500/50",
+    shadow: "group-hover:shadow-[0_0_50px_-10px_rgba(249,115,22,0.5)]"
   },
   {
     icon: <FileWarning size={32} />,
     title: "Boring Tracking",
-    desc: "Manual calorie counting is tedious and abstract. It feels like homework, impossible to sustain.",
+    desc: "Manual calorie counting is tedious and abstract.",
     color: "text-gray-300",
     bg: "bg-gray-500/10",
-    // Glow Silver
-    glowClass: "group-hover:shadow-[0_0_50px_-10px_rgba(209,213,219,0.4)] group-hover:border-gray-400/50"
+    borderColor: "group-hover:border-gray-400/50",
+    shadow: "group-hover:shadow-[0_0_50px_-10px_rgba(209,213,219,0.4)]"
   }
 ];
 
@@ -43,58 +42,87 @@ export default function ProblemSolution() {
   const triggerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
   
-  const IMAGE_URL = "/problem-cover.jpg"; 
+  const IMG_DESKTOP = "/problem-cover.jpg"; 
+  const IMG_MOBILE = "/pexels-taryn-elliott-4374578.jpg";
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: triggerRef.current,
-          start: "top top",
-          end: "+=2000",
-          scrub: 1, // Momentum scrub agar smooth
-          pin: true,
-          anticipatePin: 1,
-        }
+      let mm = gsap.matchMedia();
+
+      // =========================================
+      // 1. DESKTOP ANIMATION (Min-width: 768px)
+      // =========================================
+      mm.add("(min-width: 768px)", () => {
+        // Setup 3D
+        gsap.set(".card-back", { rotationY: 180 }); 
+        
+        // Reset container (Hapus setting border/radius di sini karena container invisible)
+        gsap.set(".problem-card-inner", { rotationY: 0 });
+        gsap.set(".card-border", { borderWidth: 0 }); 
+        
+        gsap.set(cardsRef.current, { gap: 0 }); 
+        gsap.set([".card-front", ".card-back"], { borderRadius: 0 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            start: "top top",
+            end: "+=2000",
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+          }
+        });
+
+        // 1. Shrink
+        tl.to(cardsRef.current, { scale: 0.85, duration: 1, ease: "power2.inOut" });
+        tl.to(".section-title", { y: -50, opacity: 0.5, scale: 0.9, duration: 1 }, "<");
+        
+        // 2. Split & Rounding
+        // Kita animasikan .card-border dan content faces, BUKAN container utamanya
+        tl.to(".card-border", { borderWidth: "1px", duration: 0.5, ease: "power2.inOut" }, ">-0.2");
+        tl.to(cardsRef.current, { gap: "2rem", duration: 1, ease: "power2.inOut" }, "<");
+        
+        // PENTING: Target elemen yang visible saja untuk borderRadius
+        tl.to([".card-front", ".card-back", ".card-border"], { borderRadius: "1.5rem", duration: 1, ease: "power2.inOut" }, "<");
+        
+        // 3. Flip
+        tl.to(".problem-card-inner", { rotateY: 180, duration: 1.2, stagger: 0.15, ease: "power2.inOut" }, ">-0.5");
       });
 
-      // 1. SHRINK (Mengecil)
-      tl.to(cardsRef.current, {
-        scale: 0.85, 
-        duration: 1,
-        ease: "power2.inOut" 
+      // =========================================
+      // 2. MOBILE ANIMATION (Max-width: 767px)
+      // =========================================
+      mm.add("(max-width: 767px)", () => {
+        gsap.set(".card-back", { rotationY: 180 });
+        gsap.set(".problem-card-inner", { rotationY: 0 }); 
+        gsap.set(".card-border", { borderWidth: 0 });
+        
+        gsap.set(cardsRef.current, { gap: 0 });
+        gsap.set([".card-front", ".card-back"], { borderRadius: 0 });
+        gsap.set(".card-front", { display: "block" }); 
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            start: "top top",
+            end: "+=1500",
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+          }
+        });
+
+        tl.to(cardsRef.current, { scale: 0.9, duration: 1, ease: "power2.inOut" });
+        tl.to(".section-title", { opacity: 0, y: -20, duration: 0.5 }, "<");
+
+        tl.to(".card-border", { borderWidth: "1px", duration: 0.5, ease: "power2.inOut" }, ">-0.2");
+        tl.to(cardsRef.current, { gap: "1.5rem", duration: 1, ease: "power2.inOut" }, "<");
+        
+        tl.to([".card-front", ".card-back", ".card-border"], { borderRadius: "1.5rem", duration: 1, ease: "power2.inOut" }, "<");
+
+        tl.to(".problem-card-inner", { rotateY: 180, duration: 1, stagger: 0.2, ease: "power2.inOut" }, ">-0.5");
       });
-
-      tl.to(".section-title", {
-        y: -50,
-        scale: 0.9,
-        opacity: 0.5,
-        duration: 1,
-        ease: "power2.inOut"
-      }, "<");
-
-      // 2. SPLIT (Memisah)
-      tl.to(cardsRef.current, {
-        gap: "2rem", 
-        duration: 1,
-        ease: "power2.inOut"
-      }, ">-0.2");
-
-      // ROUNDED CORNERS: Dianimasikan langsung di Front & Back
-      tl.to([".card-front", ".card-back"], {
-        borderRadius: "1.5rem", 
-        duration: 1,
-        ease: "power2.inOut"
-      }, "<");
-
-      // 3. FLIP (Berputar menampilkan KONTEN)
-      tl.to(".problem-card-inner", {
-        rotateY: 180,
-        duration: 1.2,
-        stagger: 0.15, 
-        ease: "power2.inOut"
-      }, ">-0.5");
 
     }, containerRef);
 
@@ -104,74 +132,75 @@ export default function ProblemSolution() {
   return (
     <section ref={containerRef} className="bg-black text-white relative">
       
-      <div ref={triggerRef} className="h-screen w-full flex flex-col items-center justify-center overflow-hidden py-10">
+      <div ref={triggerRef} className="w-full h-screen flex flex-col items-center justify-center py-10 overflow-hidden">
         
-        {/* Title */}
-        <div className="section-title text-center mb-8 relative z-10 will-change-transform">
-          <h2 className="text-sm font-bold tracking-[0.2em] text-[#CCFF00] uppercase mb-3">
+        <div className="section-title text-center mb-8 relative z-10 px-4 transition-opacity">
+          <h2 className="text-xs md:text-sm font-bold tracking-[0.2em] text-[#CCFF00] uppercase mb-3">
             The Invisible Problem
           </h2>
-          <h3 className="text-3xl lg:text-5xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
+          <h3 className="text-3xl md:text-5xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
             Eating Blindly? <br /> See the Truth.
           </h3>
         </div>
 
-        {/* Cards Wrapper */}
         <div 
           ref={cardsRef} 
-          className="flex w-full max-w-6xl h-[50vh] md:h-[60vh] gap-0 px-4 will-change-transform"
+          className="flex flex-col md:flex-row w-full max-w-6xl h-[65vh] md:h-[60vh] px-6 md:px-0 will-change-transform"
         >
           {PROBLEMS.map((item, index) => (
             <div 
               key={index} 
-              className="problem-card relative flex-1 group perspective-1000"
+              className="problem-card relative flex-1 w-full md:w-auto group perspective-1000"
             >
-              {/* INNER 3D CONTAINER */}
               <div 
                 className={`
                   problem-card-inner relative w-full h-full 
                   transition-all duration-500 ease-out transform-style-3d 
-                  border border-transparent
-                  ${item.glowClass} 
-                  group-hover:-translate-y-3
+                  ${item.shadow} 
                 `}
-                style={{ borderRadius: '1.5rem' }} 
+                // HAPUS overflow-hidden DARI SINI !!!
+                // HAPUS class border juga dari sini
               >
                 
-                {/* --- FRONT SIDE (GAMBAR) --- */}
-                {/* z-20 agar di awal dia di atas */}
+                {/* --- FRONT SIDE --- */}
                 <div 
-                  className="card-front absolute inset-0 w-full h-full backface-hidden overflow-hidden bg-gray-900 z-20"
-                  style={{
-                    backgroundImage: `url(${IMAGE_URL})`,
-                    backgroundSize: '300% 100%', 
-                    backgroundPosition: `${index * 50}% center`,
-                    borderRadius: '0px'
-                  }}
+                  className="card-front absolute inset-0 w-full h-full backface-hidden overflow-hidden bg-gray-900 z-[1]"
                 >
+                  <div 
+                    className="absolute inset-0 w-full h-full puzzle-bg"
+                  />
                   <div className="absolute inset-0 bg-black/20" />
                 </div>
 
-                {/* --- BACK SIDE (KONTEN TEXT) --- */}
-                {/* transform rotateY(180deg) wajib ada di style awal */}
+                {/* --- BACK SIDE --- */}
                 <div 
-                  className="card-back absolute inset-0 w-full h-full backface-hidden overflow-hidden bg-[#111] p-8 flex flex-col justify-center items-center text-center z-10"
-                  style={{ 
-                    transform: 'rotateY(180deg)',
-                    borderRadius: '0px'
-                  }}
+                  className="card-back absolute inset-0 w-full h-full backface-hidden overflow-hidden bg-[#111] p-6 md:p-8 flex flex-col justify-center items-center text-center z-[1]"
                 >
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${item.bg} ${item.color} shadow-inner`}>
+                  <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mb-3 md:mb-6 ${item.bg} ${item.color} shadow-inner`}>
                     {item.icon}
                   </div>
                   
-                  <h4 className="text-2xl font-bold text-white mb-4 group-hover:text-[#CCFF00] transition-colors duration-300">
+                  <h4 className="text-lg md:text-2xl font-bold text-white mb-2 md:mb-4 group-hover:text-[#CCFF00] transition-colors duration-300">
                     {item.title}
                   </h4>
-                  <p className="text-gray-400 leading-relaxed text-lg">
+                  <p className="text-gray-400 leading-relaxed text-xs md:text-lg">
                     {item.desc}
                   </p>
                 </div>
+
+                {/* --- BORDER OVERLAY (SOLUSI BOCOR) --- */}
+                {/* translate-z-[1px] PENTING:
+                    Supaya border ini melayang sedikit di atas gambar 3D, 
+                    jadi tidak 'rebutan pixel' (flickering) dengan gambar.
+                */}
+                <div 
+                  className={`
+                    card-border absolute inset-0 z-[50] pointer-events-none 
+                    rounded-[inherit] border-solid border-transparent 
+                    transition-colors duration-300 translate-z-[1px]
+                    ${item.borderColor}
+                  `}
+                />
 
               </div>
             </div>
@@ -183,8 +212,32 @@ export default function ProblemSolution() {
       <style jsx global>{`
         .perspective-1000 { perspective: 1000px; }
         .transform-style-3d { transform-style: preserve-3d; }
-        /* Penting: -webkit prefix untuk Safari/iOS */
         .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        
+        /* Utility class untuk Z-axis */
+        .translate-z-\[1px\] { transform: translateZ(1px); }
+
+        /* --- PUZZLE LOGIC --- */
+        .puzzle-bg {
+            background-image: url('${IMG_MOBILE}');
+            background-size: 100% 300% !important; 
+            background-repeat: no-repeat;
+        }
+
+        .problem-card:nth-child(1) .puzzle-bg { background-position: center top !important; }
+        .problem-card:nth-child(2) .puzzle-bg { background-position: center center !important; }
+        .problem-card:nth-child(3) .puzzle-bg { background-position: center bottom !important; }
+
+        @media (min-width: 768px) {
+            .puzzle-bg {
+                background-image: url('${IMG_DESKTOP}') !important;
+                background-size: 300% 100% !important;
+            }
+
+            .problem-card:nth-child(1) .puzzle-bg { background-position: left center !important; }
+            .problem-card:nth-child(2) .puzzle-bg { background-position: center center !important; }
+            .problem-card:nth-child(3) .puzzle-bg { background-position: right center !important; }
+        }
       `}</style>
     </section>
   );

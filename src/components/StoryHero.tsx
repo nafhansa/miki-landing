@@ -14,7 +14,7 @@ const StartOverlay = forwardRef<HTMLDivElement, OverlayProps>(function StartOver
   return (
     <div 
       ref={ref as React.RefObject<HTMLDivElement>} 
-      className="absolute left-4 md:left-10 top-20 max-w-3xl opacity-100"
+      className="absolute left-4 md:left-10 top-35 md:top-20 max-w-3xl opacity-100"
     >
       <div className="flex items-center gap-2 mb-4">
         <span className="w-8 h-[2px] bg-[#F72585]"></span>
