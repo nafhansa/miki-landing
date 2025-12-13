@@ -1,20 +1,101 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050510;
+  --foreground: #ededed;
+  /* Design System Tokens */
+  /* Blue Palette */
+  --color-blue-light: #f5feff;
+  --color-blue-light-hover: #f0feff;
+  --color-blue-light-active: #e0fcff;
+  --color-blue-normal: #9bf6ff;
+  --color-blue-normal-hover: #8cdde6;
+  --color-blue-normal-active: #7cc5cc;
+  --color-blue-dark: #74b9bf;
+  --color-blue-dark-hover: #5d9499;
+  --color-blue-dark-active: #466f73;
+  --color-blue-darker: #365659;
+
+  /* Dark Purple Palette */
+  --color-dpurple-light: #f8f7ff;
+  --color-dpurple-light-hover: #f5f3ff;
+  --color-dpurple-light-active: #ebe7ff;
+  --color-dpurple-normal: #bdb2ff;
+  --color-dpurple-normal-hover: #aaa0e6;
+  --color-dpurple-normal-active: #978ecc;
+  --color-dpurple-dark: #8e86bf;
+  --color-dpurple-dark-hover: #716b99;
+  --color-dpurple-dark-active: #555073;
+  --color-dpurple-darker: #423e59;
+
+  /* Purple Palette */
+  --color-purple-light: #f6f9ff;
+  --color-purple-light-hover: #f1f6ff;
+  --color-purple-light-active: #e2edff;
+  --color-purple-normal: #a0c4ff;
+  --color-purple-normal-hover: #90b0e6;
+  --color-purple-normal-active: #809dcc;
+  --color-purple-dark: #7893bf;
+  --color-purple-dark-hover: #607699;
+  --color-purple-dark-active: #485873;
+  --color-purple-darker: #384559;
+
+  /* Base / Neutral */
+  --color-bg-deep: #050510;
+  --color-bg-black: #000000;
+
+  /* RGB helpers for shadows */
+  --color-blue-normal-rgb: 155, 246, 255;
+  --color-dpurple-normal-rgb: 189, 178, 255;
+  --color-purple-normal-rgb: 160, 196, 255;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  /* Expose palette tokens to Tailwind utilities */
+  --color-blue-light: var(--color-blue-light);
+  --color-blue-light-hover: var(--color-blue-light-hover);
+  --color-blue-light-active: var(--color-blue-light-active);
+  --color-blue-normal: var(--color-blue-normal);
+  --color-blue-normal-hover: var(--color-blue-normal-hover);
+  --color-blue-normal-active: var(--color-blue-normal-active);
+  --color-blue-dark: var(--color-blue-dark);
+  --color-blue-dark-hover: var(--color-blue-dark-hover);
+  --color-blue-dark-active: var(--color-blue-dark-active);
+  --color-blue-darker: var(--color-blue-darker);
+
+  --color-dpurple-light: var(--color-dpurple-light);
+  --color-dpurple-light-hover: var(--color-dpurple-light-hover);
+  --color-dpurple-light-active: var(--color-dpurple-light-active);
+  --color-dpurple-normal: var(--color-dpurple-normal);
+  --color-dpurple-normal-hover: var(--color-dpurple-normal-hover);
+  --color-dpurple-normal-active: var(--color-dpurple-normal-active);
+  --color-dpurple-dark: var(--color-dpurple-dark);
+  --color-dpurple-dark-hover: var(--color-dpurple-dark-hover);
+  --color-dpurple-dark-active: var(--color-dpurple-dark-active);
+  --color-dpurple-darker: var(--color-dpurple-darker);
+
+  --color-purple-light: var(--color-purple-light);
+  --color-purple-light-hover: var(--color-purple-light-hover);
+  --color-purple-light-active: var(--color-purple-light-active);
+  --color-purple-normal: var(--color-purple-normal);
+  --color-purple-normal-hover: var(--color-purple-normal-hover);
+  --color-purple-normal-active: var(--color-purple-normal-active);
+  --color-purple-dark: var(--color-purple-dark);
+  --color-purple-dark-hover: var(--color-purple-dark-hover);
+  --color-purple-dark-active: var(--color-purple-dark-active);
+  --color-purple-darker: var(--color-purple-darker);
+
+  --color-bg-deep: var(--color-bg-deep);
+  --color-bg-black: var(--color-bg-black);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: var(--color-bg-deep);
     --foreground: #ededed;
   }
 }

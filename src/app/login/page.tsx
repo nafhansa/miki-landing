@@ -16,17 +16,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#050510] flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen w-full bg-bg-deep flex items-center justify-center relative overflow-hidden">
       {/* Background Ambience */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,_#1a0b2e_0%,_#050510_60%)]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#F72585] opacity-[0.03] blur-[100px] rounded-full" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,_#1a0b2e_0%,_var(--color-bg-deep)_60%)]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-normal opacity-[0.03] blur-[100px] rounded-full" />
 
       <div className="relative z-10 w-full max-w-md p-8 flex flex-col items-center gap-8">
         
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 className="text-3xl md:text-4xl font-black italic tracking-tighter text-white">
-            USER <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F72585] to-[#7209b7]">ACCESS</span>
+            USER <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-normal to-dpurple-normal">ACCESS</span>
           </h1>
           <p className="text-gray-400 text-sm tracking-wide">Select your authentication protocol</p>
         </div>
@@ -38,10 +38,10 @@ export default function LoginPage() {
           <button
             onClick={() => handleLogin("google")}
             disabled={!!loading}
-            className="group relative w-full h-14 bg-white/5 border border-white/10 hover:border-[#F72585]/50 hover:bg-white/10 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 overflow-hidden"
+            className="group relative w-full h-14 bg-white/5 border border-white/10 hover:border-blue-normal/50 hover:bg-white/10 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 overflow-hidden"
           >
              {loading === "google" ? (
-                 <span className="animate-pulse text-sm font-bold text-gray-300">AUTHENTICATING...</span>
+                <span className="animate-pulse text-sm font-bold text-gray-300">AUTHENTICATING...</span>
              ) : (
                 <>
                     <svg className="w-5 h-5 text-white group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">

@@ -12,7 +12,7 @@ export default function Footer() {
           {/* 1. BRAND & DESC */}
           <div className="flex flex-col items-center md:items-start space-y-5 max-w-sm">
             <div className="flex items-center gap-3 text-2xl font-bold tracking-tight">
-              <div className="w-10 h-10 bg-[#F72585] rounded-xl flex items-center justify-center text-white shadow-[0_0_15px_rgba(247,37,133,0.4)]">
+              <div className="w-10 h-10 bg-blue-normal rounded-xl flex items-center justify-center text-white shadow-[0_0_15px_rgba(var(--color-blue-normal-rgb),0.4)]">
                 <Activity size={22} />
               </div>
               <span>MIKI APP</span>
@@ -28,12 +28,12 @@ export default function Footer() {
             <h4 className="font-bold text-lg mb-4 md:mb-6 text-white">Product</h4>
             <ul className="space-y-3 text-gray-400 text-sm font-medium">
               <li>
-                <Link href="/pricing" className="hover:text-[#CCFF00] hover:translate-x-1 transition-all duration-300 inline-block">
+                <Link href="/pricing" className="hover:text-blue-light hover:translate-x-1 transition-all duration-300 inline-block">
                     Pricing
                 </Link>
               </li>
               <li>
-                <Link href="/downloads" className="hover:text-[#CCFF00] hover:translate-x-1 transition-all duration-300 inline-block">
+                <Link href="/downloads" className="hover:text-blue-light hover:translate-x-1 transition-all duration-300 inline-block">
                     Download App
                 </Link>
               </li>
@@ -51,11 +51,11 @@ export default function Footer() {
                 <input 
                   type="email" 
                   placeholder="Enter your email" 
-                  className="w-full bg-zinc-900/50 border border-white/10 rounded-xl py-3 px-4 pl-11 text-sm text-white focus:outline-none focus:border-[#CCFF00] focus:bg-zinc-900 transition-all placeholder:text-gray-600"
+                  className="w-full bg-zinc-900/50 border border-white/10 rounded-xl py-3 px-4 pl-11 text-sm text-white focus:outline-none focus:border-blue-normal focus:bg-zinc-900 transition-all placeholder:text-gray-600"
                 />
-                <Mail size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-[#CCFF00] transition-colors" />
+                <Mail size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-normal transition-colors" />
               </div>
-              <button className="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-[#CCFF00] hover:shadow-[0_0_20px_rgba(204,255,0,0.3)] hover:scale-[1.02] active:scale-95 transition-all duration-300">
+              <button className="w-full bg-white text-black font-bold py-3 rounded-xl hover:bg-blue-normal hover:shadow-[0_0_20px_rgba(var(--color-blue-normal-rgb),0.3)] hover:scale-[1.02] active:scale-95 transition-all duration-300">
                 Subscribe
               </button>
             </form>

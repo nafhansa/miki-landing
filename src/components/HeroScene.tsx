@@ -72,11 +72,11 @@ export function HeroScene({ textRefs, cameraPositions = DEFAULT_CAMERA_POSITIONS
         position={[-6, 8, -12]} 
         intensity={30}   
         distance={45}    
-        color="#F72585" 
+        color="#9bf6ff" 
         angle={0.6}      
         penumbra={1} 
       />
-      <spotLight position={[5, 2, 5]} intensity={5} color="#CCFF00" angle={0.9} penumbra={1} distance={20} />
+      <spotLight position={[5, 2, 5]} intensity={5} color="#a0c4ff" angle={0.9} penumbra={1} distance={20} />
 
       <PerspectiveCamera makeDefault position={[cameraPositions.start.x, cameraPositions.start.y, cameraPositions.start.z]} fov={cameraFov} />
       
@@ -86,7 +86,7 @@ export function HeroScene({ textRefs, cameraPositions = DEFAULT_CAMERA_POSITIONS
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
           <planeGeometry args={[2, 500]} />
           <meshBasicMaterial 
-            color="#CCFF00" 
+            color="#9bf6ff" 
             transparent 
             opacity={0.2}
             blending={THREE.AdditiveBlending} 
@@ -95,19 +95,19 @@ export function HeroScene({ textRefs, cameraPositions = DEFAULT_CAMERA_POSITIONS
       </group>
 
       <Float floatIntensity={0.2} rotationIntensity={0.1} speed={2} floatingRange={[0, 0.2]}>
-        <Trail width={0.3} length={8} decay={3} stride={0} color="#F72585" attenuation={(w) => w}>
+        <Trail width={0.3} length={8} decay={3} stride={0} color="#9bf6ff" attenuation={(w) => w}>
           <group>
             <RunningMan scale={model?.scale ?? [1, 1, 1]} position={model?.position ?? [0, 0, 0]} />
             <SpeedLines />
-            <pointLight position={[0.2, 1.2, 0]} intensity={2} color="#F72585" distance={3} />
-            <pointLight position={[-0.2, 1.2, 0]} intensity={2} color="#CCFF00" distance={3} />
+            <pointLight position={[0.2, 1.2, 0]} intensity={2} color="#9bf6ff" distance={3} />
+            <pointLight position={[-0.2, 1.2, 0]} intensity={2} color="#a0c4ff" distance={3} />
           </group>
         </Trail>
 
-        <Trail width={0.1} length={5} decay={1} stride={0} color="#CCFF00" attenuation={(w) => w * 0.5}>
+        <Trail width={0.1} length={5} decay={1} stride={0} color="#9bf6ff" attenuation={(w) => w * 0.5}>
           <mesh position={[0, 1.5, -0.2]}>
             <sphereGeometry args={[0.01, 8, 8]} />
-            <meshBasicMaterial color="#CCFF00" transparent opacity={0} />
+            <meshBasicMaterial color="#9bf6ff" transparent opacity={0} />
           </mesh>
         </Trail>
       </Float>

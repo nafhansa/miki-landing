@@ -66,8 +66,8 @@ export default function DownloadPage() {
     >
       
       {/* BACKGROUND ELEMENTS */}
-      <div className="absolute inset-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_rgba(247,37,133,0.15),_transparent_40%)] pointer-events-none" />
-      <div className="absolute inset-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,_rgba(204,255,0,0.1),_transparent_40%)] pointer-events-none" />
+      <div className="absolute inset-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_rgba(var(--color-blue-normal-rgb),0.15),_transparent_40%)] pointer-events-none" />
+      <div className="absolute inset-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,_rgba(var(--color-purple-normal-rgb),0.1),_transparent_40%)] pointer-events-none" />
       <div className="absolute inset-0 opacity-10" 
            style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '40px 40px' }} 
       />
@@ -78,8 +78,8 @@ export default function DownloadPage() {
         <div className="max-w-xl relative z-30 mx-auto lg:mx-0 text-center lg:text-left">
           
           <div className="hero-text-element flex items-center justify-center lg:justify-start gap-2 mb-6">
-            <span className="px-3 py-1 bg-[#CCFF00]/10 border border-[#CCFF00]/30 text-[#CCFF00] text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full">Available Now</span>
-            <span className="px-3 py-1 bg-[#F72585]/10 border border-[#F72585]/30 text-[#F72585] text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full flex items-center gap-1"><Star size={10} fill="currentColor" /> 4.9 Rating</span>
+            <span className="px-3 py-1 bg-blue-normal/10 border border-blue-normal/30 text-blue-normal text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full">Available Now</span>
+            <span className="px-3 py-1 bg-dpurple-normal/10 border border-dpurple-normal/30 text-dpurple-normal text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full flex items-center gap-1"><Star size={10} fill="currentColor" /> 4.9 Rating</span>
           </div>
 
           {/* FIX FONT SIZE MOBILE: text-4xl biar gak terlalu bongsor di HP */}
@@ -93,7 +93,7 @@ export default function DownloadPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-12 justify-center lg:justify-start">
-            <button className="store-button group relative bg-white text-black px-5 py-3 rounded-xl flex items-center justify-center gap-3 transition-all hover:bg-[#CCFF00] hover:shadow-[0_0_20px_rgba(204,255,0,0.4)] w-full sm:w-auto">
+            <button className="store-button group relative bg-white text-black px-5 py-3 rounded-xl flex items-center justify-center gap-3 transition-all hover:bg-blue-normal hover:shadow-[0_0_20px_rgba(var(--color-blue-normal-rgb),0.4)] w-full sm:w-auto">
               <Apple size={28} className="shrink-0" />
               <div className="text-left">
                 <div className="text-[10px] font-medium opacity-80">Download on the</div>
@@ -112,8 +112,8 @@ export default function DownloadPage() {
           
            {/* Features Grid */}
            <div className="hero-text-element grid grid-cols-3 gap-4 md:gap-6 border-t border-white/10 pt-8">
-            <div><div className="text-[#CCFF00] mb-2 flex justify-center lg:justify-start"><Smartphone size={24} /></div><h4 className="font-bold text-sm">AR Scan</h4><p className="text-[10px] md:text-xs text-gray-500">Real-time analysis</p></div>
-            <div><div className="text-[#F72585] mb-2 flex justify-center lg:justify-start"><Zap size={24} /></div><h4 className="font-bold text-sm">Fast AI</h4><p className="text-[10px] md:text-xs text-gray-500">Instant results</p></div>
+            <div><div className="text-blue-normal mb-2 flex justify-center lg:justify-start"><Smartphone size={24} /></div><h4 className="font-bold text-sm">AR Scan</h4><p className="text-[10px] md:text-xs text-gray-500">Real-time analysis</p></div>
+            <div><div className="text-dpurple-normal mb-2 flex justify-center lg:justify-start"><Zap size={24} /></div><h4 className="font-bold text-sm">Fast AI</h4><p className="text-[10px] md:text-xs text-gray-500">Instant results</p></div>
             <div><div className="text-white mb-2 flex justify-center lg:justify-start"><ShieldCheck size={24} /></div><h4 className="font-bold text-sm">Secure</h4><p className="text-[10px] md:text-xs text-gray-500">Data encrypted</p></div>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function DownloadPage() {
         {/* z-20 agar di bawah teks, flex center */}
         <div ref={phoneRef} className="relative z-20 flex md:mr-20 justify-center lg:justify-end lg:pr-10 mt-8 lg:mt-0">
           
-          <div className="bg-glow-pulse absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[300px] h-[400px] md:h-[500px] bg-[#F72585] blur-[100px] opacity-40 rounded-full pointer-events-none" />
+          <div className="bg-glow-pulse absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[300px] h-[400px] md:h-[500px] bg-dpurple-normal blur-[100px] opacity-40 rounded-full pointer-events-none" />
 
           {/* FIX MOBILE SIZE: w-[260px] h-[520px] untuk mobile, w-[300px] h-[600px] untuk desktop */}
           <div className="phone-mockup-inner relative z-10 w-[260px] h-[520px] md:w-[300px] md:h-[600px] bg-black rounded-[2.5rem] md:rounded-[3rem] border-[6px] md:border-8 border-zinc-800 shadow-2xl overflow-hidden ring-1 ring-white/20">
@@ -131,7 +131,7 @@ export default function DownloadPage() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-6 md:h-7 bg-black rounded-b-2xl z-30" />
             
             <div className="w-full h-full bg-zinc-900 relative">
-              <div className="absolute top-0 w-full h-40 bg-gradient-to-b from-[#CCFF00]/20 to-transparent p-5 pt-10 md:p-6 md:pt-12">
+              <div className="absolute top-0 w-full h-40 bg-gradient-to-b from-blue-normal/20 to-transparent p-5 pt-10 md:p-6 md:pt-12">
                  <div className="flex justify-between items-center mb-4">
                     <div className="w-8 h-8 rounded-full bg-white/10" />
                     <div className="w-20 h-2 rounded-full bg-white/10" />
@@ -141,14 +141,14 @@ export default function DownloadPage() {
               <div className="absolute top-28 md:top-32 left-4 right-4 bg-black/80 backdrop-blur-md border border-white/10 p-4 rounded-2xl">
                  <div className="flex justify-between mb-4">
                     <span className="text-gray-400 text-[10px] uppercase tracking-wider">Health Score</span>
-                    <span className="text-[#CCFF00] font-bold">92%</span>
+                    <span className="text-blue-normal font-bold">92%</span>
                  </div>
                  <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
-                    <div className="h-full w-[92%] bg-[#CCFF00]" />
+                    <div className="h-full w-[92%] bg-blue-normal" />
                  </div>
               </div>
-              <div className="absolute top-64 left-1/2 -translate-x-1/2 w-48 h-64 bg-gradient-to-b from-[#F72585]/20 to-transparent rounded-full blur-xl animate-pulse" />
-              <div className="absolute bottom-6 left-4 right-4 h-12 md:h-14 bg-[#CCFF00] rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(204,255,0,0.3)] cursor-pointer hover:scale-105 transition-transform">
+              <div className="absolute top-64 left-1/2 -translate-x-1/2 w-48 h-64 bg-gradient-to-b from-dpurple-normal/20 to-transparent rounded-full blur-xl animate-pulse" />
+              <div className="absolute bottom-6 left-4 right-4 h-12 md:h-14 bg-blue-normal hover:bg-blue-normal-hover rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(var(--color-blue-normal-rgb),0.3)] cursor-pointer hover:scale-105 transition-transform">
                 <span className="text-black font-bold text-sm md:text-base">Scan Food Now</span>
               </div>
             </div>
@@ -159,10 +159,10 @@ export default function DownloadPage() {
 
           {/* Floating Icons - Adjusted position for mobile to prevent overflow */}
           <div className="absolute top-10 left-0 md:top-20 md:left-10 bg-zinc-900 p-2 md:p-3 rounded-xl border border-white/10 shadow-xl animate-bounce duration-[3000ms]">
-            <Zap size={16} className="text-[#CCFF00] md:w-[20px] md:h-[20px]" />
+            <Zap size={16} className="text-blue-normal md:w-[20px] md:h-[20px]" />
           </div>
           <div className="absolute bottom-20 right-0 md:bottom-20 md:-right-15 bg-zinc-900 p-2 md:p-3 rounded-xl border border-white/10 shadow-xl animate-bounce duration-[4000ms]">
-            <Star size={16} className="text-[#F72585] md:w-[20px] md:h-[20px]" fill="#F72585" />
+            <Star size={16} className="text-dpurple-normal md:w-[20px] md:h-[20px]" fill="currentColor" />
           </div>
 
         </div>

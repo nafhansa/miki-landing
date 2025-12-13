@@ -16,43 +16,49 @@ export default function LoadingScreen() {
       const letters = document.querySelectorAll(".miiki-char");
       const blocks = document.querySelectorAll(".reveal-block");
 
-      tl.to(letters, {
+      // 1. Set Initial Random Pos (Supaya pas muncul udah acak)
+      tl.set(letters, {
         x: () => gsap.utils.random(-300, 300),
         y: () => gsap.utils.random(-300, 300),
         rotation: () => gsap.utils.random(-360, 360),
         opacity: 0,
-        duration: 0.1, 
+        scale: 0.5
       })
+      // 2. Muncul pelan-pelan (Fade In)
       .to(letters, {
         opacity: 1,
         duration: 0.5,
       })
+      // 3. Menyatu ke Tengah (Unite)
       .to(letters, {
         x: 0,
         y: 0,
         rotation: 0,
         scale: 1,
         duration: 1.5,
-        ease: "elastic.out(1, 0.3)",
+        ease: "elastic.out(1, 0.3)", // Efek memantul dikit
         stagger: {
           amount: 0.3,
           from: "center"
         }
       })
+      // 4. Efek Flash/Neon Blink
       .to(letters, {
-        textShadow: "0 0 30px #CCFF00",
+        textShadow: "0 0 50px #00FFFF, 0 0 20px #00FFFF", // Neon Glow Hardcode biar nyala
         color: "#ffffff",
         scale: 1.1,
-        duration: 0.2,
+        duration: 0.1,
         yoyo: true,
         repeat: 1
       })
+      // 5. TULISAN HILANG (Sesuai request)
       .to(letters, {
         opacity: 0,
         scale: 0.5,
         duration: 0.3,
         delay: 0.2
       })
+      // 6. Grid Terbuka (Reveal Website)
       .to(blocks, {
         scale: 0,
         opacity: 0,
@@ -75,19 +81,24 @@ export default function LoadingScreen() {
   return (
     <div 
       ref={containerRef} 
-      className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
+      className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden pointer-events-none"
     >
-      <div className="absolute inset-0 grid grid-cols-10 md:grid-cols-12 lg:grid-cols-20 grid-rows-10 md:grid-rows-12 lg:grid-rows-20 w-full h-full">
+      {/* Grid Overlay Background */}
+      <div className="absolute inset-0 grid grid-cols-10 md:grid-cols-12 lg:grid-cols-20 grid-rows-10 md:grid-rows-12 lg:grid-rows-20 w-full h-full pointer-events-auto">
         {Array.from({ length: 400 }).map((_, i) => (
-          <div key={i} className="reveal-block bg-[#F72585] w-full h-full border-[0.5px] border-[#F72585]" />
+          // Warna background ini bisa diganti sesuai variable theme baru kamu nanti
+          // Saat ini pakai hitam pekat biar kontras
+          <div key={i} className="reveal-block bg-[#050510] w-full h-full border-[0.5px] border-white/5" />
         ))}
       </div>
 
-      <div className="relative z-10 flex gap-2 md:gap-4 perspective-1000 pointer-events-none">
+      {/* Text Container */}
+      <div className="relative z-10 flex gap-2 md:gap-4 perspective-1000">
         {["M", "I", "I", "K", "I"].map((char, index) => (
           <span 
             key={index} 
-            className="miiki-char text-6xl md:text-9xl font-black text-[#CCFF00] inline-block opacity-0"
+            className="miiki-char text-6xl md:text-9xl font-black text-[#00FFFF] inline-block opacity-0"
+            style={{ willChange: "transform, opacity" }} // Performance boost
           >
             {char}
           </span>

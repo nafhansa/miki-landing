@@ -88,7 +88,7 @@ export default function Pricing() {
       {/* BACKGROUND OVERLAY (Z-10) */}
       <div ref={overlayRef} className="absolute inset-0 z-10 grid grid-cols-10 md:grid-cols-20 grid-rows-10 md:grid-rows-20 w-full h-full pointer-events-none">
         {Array.from({ length: 400 }).map((_, i) => (
-          <div key={i} className="pricing-reveal-block bg-[#F72585] w-full h-full border-[0.5px] border-[#F72585]" />
+          <div key={i} className="pricing-reveal-block bg-blue-normal w-full h-full border-[0.5px] border-blue-normal" />
         ))}
       </div>
 
@@ -97,7 +97,7 @@ export default function Pricing() {
         
         {/* HEADER */}
         <div className="pricing-content text-center max-w-3xl mx-auto mb-16 opacity-0"> 
-          <h2 className="text-sm font-bold tracking-widest text-[#CCFF00] uppercase mb-3">
+          <h2 className="text-sm font-bold tracking-widest text-blue-normal uppercase mb-3">
             Pricing Plans
           </h2>
           <h3 className="text-3xl lg:text-4xl font-bold text-white leading-tight">
@@ -114,22 +114,22 @@ export default function Pricing() {
               // UPDATE CLASS:
               // 1. h-full: Agar kartu mengisi tinggi penuh grid
               // 2. flex flex-col: Agar kita bisa mengatur posisi button di bawah
-              className={`pricing-content opacity-0 relative p-8 rounded-[2rem] transition-all duration-300 h-full flex flex-col ${
-                tier.highlight 
-                  ? "bg-zinc-900 border border-[#CCFF00]/50 shadow-[0_0_30px_-10px_rgba(204,255,0,0.3)] scale-100 md:scale-105 z-30" 
-                  : "bg-zinc-900/50 border border-white/10 hover:-translate-y-2 hover:border-white/30"
-              }`}
-            >
-              {tier.highlight && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#CCFF00] text-black text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider shadow-lg">
-                  Most Popular
-                </div>
-              )}
+            className={`pricing-content opacity-0 relative p-8 rounded-[2rem] transition-all duration-300 h-full flex flex-col ${
+              tier.highlight 
+                ? "bg-zinc-900 border border-blue-normal/50 shadow-[0_0_30px_-10px_rgba(var(--color-blue-normal-rgb),0.3)] scale-100 md:scale-105 z-30" 
+                : "bg-zinc-900/50 border border-white/10 hover:-translate-y-2 hover:border-white/30"
+            }`}
+          >
+            {tier.highlight && (
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-normal text-black text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider shadow-lg">
+                Most Popular
+              </div>
+            )}
 
               {/* SECTION ATAS (Header & Features) - Diberi flex-grow agar mendorong button ke bawah */}
               <div className="flex-1">
                 <div className="mb-8">
-                  <h4 className={`text-xl font-bold mb-2 ${tier.highlight ? "text-[#CCFF00]" : "text-white"}`}>
+                  <h4 className={`text-xl font-bold mb-2 ${tier.highlight ? "text-blue-normal" : "text-white"}`}>
                     {tier.name}
                   </h4>
                   <div className="flex items-baseline gap-1">
@@ -144,7 +144,7 @@ export default function Pricing() {
                 <div className="space-y-4 mb-8">
                   {tier.features.map((feature, i) => (
                     <div key={i} className="flex items-start gap-3 text-sm">
-                      <div className={`mt-0.5 rounded-full p-0.5 ${tier.highlight ? "bg-[#CCFF00] text-black" : "bg-white/10 text-white"}`}>
+                      <div className={`mt-0.5 rounded-full p-0.5 ${tier.highlight ? "bg-blue-normal text-black" : "bg-white/10 text-white"}`}>
                         <Check size={12} strokeWidth={3} />
                       </div>
                       <span>{feature}</span>
@@ -164,7 +164,7 @@ export default function Pricing() {
               {/* SECTION BAWAH (Button) - Karena parent flex-col & atasnya flex-1, ini otomatis di paling bawah */}
               <button className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 mt-auto ${
                 tier.highlight 
-                  ? "bg-[#CCFF00] text-black hover:bg-[#b3e600] shadow-[0_0_20px_-5px_rgba(204,255,0,0.4)]" 
+                  ? "bg-blue-normal text-black hover:bg-blue-normal-hover shadow-[0_0_20px_-5px_rgba(var(--color-blue-normal-rgb),0.4)]" 
                   : "border border-white/20 text-white bg-transparent hover:bg-white hover:text-black"
               }`}>
                 {tier.cta}
