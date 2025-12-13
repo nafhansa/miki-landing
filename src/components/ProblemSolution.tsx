@@ -47,7 +47,7 @@ export default function ProblemSolution() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      let mm = gsap.matchMedia();
+      const mm = gsap.matchMedia();
 
       // =========================================
       // 1. DESKTOP ANIMATION (Min-width: 768px)
