@@ -68,7 +68,7 @@ export function SpeedLines() {
       const x = positions[i * 3];
       const y = positions[i * 3 + 1];
       if (Math.abs(x) < 0.5 && Math.abs(y) < 1.5) {
-         positions[i * 3] = x > 0 ? 0.8 : -0.8; // Geser ke samping kalau kena badan
+         positions[i * 3] = x > 0 ? 0.8 : -0.8;
       }
 
       dummy.position.set(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
@@ -83,14 +83,14 @@ export function SpeedLines() {
     <instancedMesh 
       ref={meshRef} 
       args={[undefined, undefined, count]} 
-      frustumCulled={false} // PENTING: Agar garis tidak hilang saat kamera bergerak
+      frustumCulled={false}
     >
       <boxGeometry args={[0.01, 0.01, 1]} />
       <meshBasicMaterial 
-        color="#CCFF00" // Warna Lime Neon (Sesuai Palette)
+        color="#CCFF00"
         transparent 
         opacity={0.2} 
-        blending={THREE.AdditiveBlending} // Agar glowing saat kena Bloom
+        blending={THREE.AdditiveBlending}
         depthWrite={false} 
       />
     </instancedMesh>
