@@ -120,7 +120,7 @@ export default function DownloadPage() {
 
         {/* --- RIGHT COLUMN: PHONE MOCKUP --- */}
         {/* z-20 agar di bawah teks, flex center */}
-        <div ref={phoneRef} className="relative z-20 flex justify-center lg:justify-end lg:pr-10 mt-8 lg:mt-0">
+        <div ref={phoneRef} className="relative z-20 flex md:mr-20 justify-center lg:justify-end lg:pr-10 mt-8 lg:mt-0">
           
           <div className="bg-glow-pulse absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[300px] h-[400px] md:h-[500px] bg-[#F72585] blur-[100px] opacity-40 rounded-full pointer-events-none" />
 
@@ -161,7 +161,7 @@ export default function DownloadPage() {
           <div className="absolute top-10 left-0 md:top-20 md:left-10 bg-zinc-900 p-2 md:p-3 rounded-xl border border-white/10 shadow-xl animate-bounce duration-[3000ms]">
             <Zap size={16} className="text-[#CCFF00] md:w-[20px] md:h-[20px]" />
           </div>
-          <div className="absolute bottom-20 right-0 md:bottom-40 md:right-10 bg-zinc-900 p-2 md:p-3 rounded-xl border border-white/10 shadow-xl animate-bounce duration-[4000ms]">
+          <div className="absolute bottom-20 right-0 md:bottom-20 md:-right-15 bg-zinc-900 p-2 md:p-3 rounded-xl border border-white/10 shadow-xl animate-bounce duration-[4000ms]">
             <Star size={16} className="text-[#F72585] md:w-[20px] md:h-[20px]" fill="#F72585" />
           </div>
 
