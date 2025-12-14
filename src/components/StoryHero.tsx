@@ -66,15 +66,16 @@ export default function StoryHero() {
   const text2Ref = useRef<HTMLDivElement>(null);
   const text3Ref = useRef<HTMLDivElement>(null);
   const text4Ref = useRef<HTMLDivElement>(null);
-  const textRefs = [text1Ref, text2Ref, text3Ref, text4Ref];
+  const textRefs = useMemo(() => [text1Ref, text2Ref, text3Ref, text4Ref] as const, []);
 
   const [showCanvas, setShowCanvas] = useState(false);
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el || typeof IntersectionObserver === 'undefined') {
-      setShowCanvas(true);
-      return;
+      // Defer state change to avoid synchronous setState inside effect
+      const id = window.setTimeout(() => setShowCanvas(true), 0);
+      return () => window.clearTimeout(id);
     }
     const obs = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {

@@ -11,13 +11,23 @@ export default function OverlayNav() {
   const [isAnimating, setIsAnimating] = useState(false);
   const router = useRouter();
 
-  const [nodeCount, setNodeCount] = useState(400);
+  const [nodeCount, setNodeCount] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(max-width: 768px)').matches ? 100 : 400;
+    }
+    return 400;
+  });
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isMobile = window.matchMedia('(max-width: 768px)').matches;
-      setNodeCount(isMobile ? 100 : 400);
-    }
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(max-width: 768px)');
+    const handler = () => setNodeCount(mq.matches ? 100 : 400);
+    if (mq.addEventListener) mq.addEventListener('change', handler);
+    else mq.addListener(handler);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener('change', handler);
+      else mq.removeListener(handler);
+    };
   }, []);
 
   const gridArray = useMemo(() => Array.from({ length: nodeCount }), [nodeCount]);

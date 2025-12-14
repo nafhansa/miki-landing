@@ -14,8 +14,8 @@ function getBaseUrl(): string {
     return window.location.origin;
   }
   if (typeof self !== 'undefined' && 'location' in self) {
-    const loc = (self as any).location;
-    const origin = loc.origin ?? `${loc.protocol}//${loc.host}`;
+    const loc = (self as unknown as { location: Location }).location;
+    const origin = (loc as Location & { origin?: string }).origin ?? `${loc.protocol}//${loc.host}`;
     return origin;
   }
   return '';

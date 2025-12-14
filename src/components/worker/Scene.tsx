@@ -71,22 +71,26 @@ function SpeedLines() {
     const positions = positionsRef.current;
     const velocities = velocitiesRef.current;
     const scaleZ = scaleZRef.current;
-
     for (let i = 0; i < count; i++) {
-      let x = (Math.random() * 2 - 1) * spreadX;
-      let y = (Math.random() * 2 - 1) * spreadY;
-      while (Math.abs(x) < safeX && Math.abs(y) < safeY) {
-        x = (Math.random() * 2 - 1) * spreadX;
-        y = (Math.random() * 2 - 1) * spreadY;
+      let xConst!: number;
+      let yConst!: number;
+      for (;;) {
+        const x = (Math.random() * 2 - 1) * spreadX;
+        const y = (Math.random() * 2 - 1) * spreadY;
+        if (!(Math.abs(x) < safeX && Math.abs(y) < safeY)) {
+          xConst = x;
+          yConst = y;
+          break;
+        }
       }
       const z = Math.random() * (frontZ - backZ) + backZ;
-      positions[i * 3] = x;
-      positions[i * 3 + 1] = y;
+      positions[i * 3] = xConst;
+      positions[i * 3 + 1] = yConst;
       positions[i * 3 + 2] = z;
       velocities[i] = 0.08 + Math.random() * 0.12;
       scaleZ[i] = 0.6 + Math.random() * 0.8;
     }
-  }, []);
+  }, [count, frontZ, backZ, spreadX, spreadY, safeX, safeY]);
 
   useFrame(() => {
     const positions = positionsRef.current;
@@ -95,8 +99,8 @@ function SpeedLines() {
     const dummy = dummyRef.current;
 
     for (let i = 0; i < count; i++) {
-      let x = positions[i * 3];
-      let y = positions[i * 3 + 1];
+      const x = positions[i * 3];
+      const y = positions[i * 3 + 1];
       let z = positions[i * 3 + 2];
 
       z -= velocities[i];
@@ -140,8 +144,8 @@ function getBaseUrl(): string {
     return window.location.origin;
   }
   if (typeof self !== 'undefined' && 'location' in self) {
-    const loc = (self as any).location;
-    const origin = loc.origin ?? `${loc.protocol}//${loc.host}`;
+    const loc = (self as unknown as { location: Location }).location;
+    const origin = (loc as Location & { origin?: string }).origin ?? `${loc.protocol}//${loc.host}`;
     return origin;
   }
   return '';
