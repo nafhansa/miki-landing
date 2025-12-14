@@ -9,7 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 type OverlayProps = React.ComponentPropsWithoutRef<'div'>;
 
-// --- Komponen Overlay Teks (Tetap sama) ---
 const StartOverlay = forwardRef<HTMLDivElement, OverlayProps>(function StartOverlay(_, ref) {
   return (
     <div ref={ref as React.RefObject<HTMLDivElement>} className="absolute left-4 md:left-10 top-35 md:top-20 max-w-3xl opacity-100 will-change-transform">
@@ -61,7 +60,6 @@ const FrontOverlay = forwardRef<HTMLDivElement, OverlayProps>(function FrontOver
   );
 });
 
-// --- Main Component ---
 export default function StoryHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const text1Ref = useRef<HTMLDivElement>(null);
@@ -70,44 +68,41 @@ export default function StoryHero() {
   const text4Ref = useRef<HTMLDivElement>(null);
   const textRefs = [text1Ref, text2Ref, text3Ref, text4Ref];
 
-  // 1. Lazy Canvas: Hanya load worker jika user scroll ke area ini
   const [showCanvas, setShowCanvas] = useState(false);
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el || typeof IntersectionObserver === 'undefined') {
-      setShowCanvas(true); // Fallback
+      setShowCanvas(true);
       return;
     }
     const obs = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         setShowCanvas(true);
-        obs.disconnect(); // Stop observing once visible
+        obs.disconnect();
       }
     }, { threshold: 0.1 });
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
 
-  // 2. Worker Creation
   const worker = useMemo(() => {
     if (!showCanvas) return null;
     return new Worker(new URL('./worker/Scene.tsx', import.meta.url), { type: 'module' });
   }, [showCanvas]);
 
-  // Cleanup worker
   useEffect(() => {
-    return () => {
-      worker?.terminate();
-    };
+    return () => { worker?.terminate(); };
   }, [worker]);
 
   useLayoutEffect(() => {
+    // --- SAFETY GUARD: Cegah warning 'GSAP target not found' ---
+    if (!containerRef.current || !textRefs[0].current || !textRefs[1].current) return;
+
     const tl = gsap.timeline({
       scrollTrigger: { trigger: '.story-container', start: 'top top', end: 'bottom bottom', scrub: 1.5 }
     });
 
-    // Animasi Text Overlay
     tl.set(textRefs[0].current, { opacity: 1, y: 0 })
       .to(textRefs[0].current, { opacity: 0, y: -50, duration: 1 })
       .fromTo(textRefs[1].current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.5 })
@@ -116,7 +111,6 @@ export default function StoryHero() {
       .to(textRefs[2].current, { opacity: 0, duration: 0.5 })
       .fromTo(textRefs[3].current, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5 });
 
-    // 3. OPTIMASI FATAL: Throttling postMessage dengan requestAnimationFrame
     let isTicking = false;
     let currentProgress = 0;
 
@@ -136,7 +130,7 @@ export default function StoryHero() {
       start: 'top top',
       end: 'bottom bottom',
       scrub: 1.5,
-      onUpdate // Pakai fungsi throttle di atas
+      onUpdate
     });
 
     return () => {
@@ -154,9 +148,9 @@ export default function StoryHero() {
               className="bg-black"
               worker={worker}
               shadows
-              dpr={[1, 1.5]} // Limit DPR max 1.5 biar ga berat di layar Retina
+              dpr={[1, 1.5]}
               gl={{ antialias: true, alpha: true, powerPreference: 'default' }}
-              fallback={<div className="w-full h-full bg-black text-white flex items-center justify-center">Loading Scene...</div>}
+              fallback={<div className="w-full h-full bg-black flex items-center justify-center">Loading Scene...</div>}
             />
           ) : (
             <div className="w-full h-full bg-black" />
