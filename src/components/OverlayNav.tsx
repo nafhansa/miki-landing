@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { gsap } from "gsap";
 import { useRouter } from "next/navigation";
 
@@ -11,244 +11,127 @@ export default function OverlayNav() {
   const [isAnimating, setIsAnimating] = useState(false);
   const router = useRouter();
 
-  const theme = {
-    accent: "var(--color-blue-normal)",
-    dark: "var(--color-bg-deep)",
-    white: "#ffffff",
-  };
+  const [nodeCount, setNodeCount] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(max-width: 768px)').matches ? 100 : 400;
+    }
+    return 400;
+  });
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(max-width: 768px)');
+    const handler = () => setNodeCount(mq.matches ? 100 : 400);
+    if (mq.addEventListener) mq.addEventListener('change', handler);
+    else mq.addListener(handler);
     return () => {
-      document.body.style.overflow = "";
+      if (mq.removeEventListener) mq.removeEventListener('change', handler);
+      else mq.removeListener(handler);
     };
+  }, []);
+
+  const gridArray = useMemo(() => Array.from({ length: nodeCount }), [nodeCount]);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
   const toggleMenu = () => {
+    // --- SAFETY GUARD: Pastikan ref ada sebelum animasi ---
     if (isAnimating || !containerRef.current || !menuRef.current) return;
 
     setIsAnimating(true);
     const container = containerRef.current;
-    const blocks = Array.from(
-      container.querySelectorAll(".overlay-reveal-block")
-    ) as HTMLDivElement[];
-    const menuItems = Array.from(
-      menuRef.current.querySelectorAll(".overlay-menu-item")
-    ) as HTMLButtonElement[]; // Pastikan class ini ada di button menu nanti
+    const blocks = gsap.utils.toArray(".overlay-reveal-block") as Element[];
+    const menuItems = gsap.utils.toArray(".overlay-menu-item") as Element[];
 
     container.style.opacity = "1";
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         onComplete: () => {
-          container.style.opacity = "0";
+          if (container) container.style.opacity = "0"; // Safety check lagi
           setIsAnimating(false);
-        },
+        }
       });
 
       if (!isOpen) {
-        tl.add(() => {
-          setIsOpen(true);
-        }, 0)
-          .fromTo(
-            blocks,
-            { scale: 1, opacity: 1 },
-            {
-              scale: 0,
-              opacity: 0,
-              duration: 1,
-              stagger: { each: 0.003, from: "random", grid: [10, 10] },
-              ease: "power1.inOut",
-            },
-            0
+        tl.add(() => setIsOpen(true), 0)
+          .fromTo(blocks, 
+            { scale: 1, opacity: 1 }, 
+            { scale: 0, opacity: 0, duration: 0.8, stagger: { each: 0.005, from: "random", grid: "auto" }, ease: "power1.inOut" }, 0
           )
-          .fromTo(
-            menuItems, // Target menu items animation
-            { y: 50, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" },
-            0.5
-          );
+          .fromTo(menuItems, { y: 50, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.1 }, 0.4);
       } else {
         tl.to(menuItems, { autoAlpha: 0, y: -20, duration: 0.3 }, 0)
-          .fromTo(
-            blocks,
-            { scale: 0, opacity: 0 },
-            {
-              scale: 1,
-              opacity: 1,
-              duration: 1,
-              stagger: { each: 0.003, from: "random", grid: [10, 10] },
-              ease: "power1.inOut",
-            },
-            0
+          .fromTo(blocks, 
+            { scale: 0, opacity: 0 }, 
+            { scale: 1, opacity: 1, duration: 0.8, stagger: { each: 0.005, from: "random", grid: "auto" }, ease: "power1.inOut" }, 0
           )
-          .add(() => {
-            setIsOpen(false);
-          }, 0.1)
-          .to(
-            blocks,
-            {
-              scale: 0,
-              opacity: 0,
-              duration: 0.35,
-              stagger: { each: 0.003, from: "random", grid: [10, 10] },
-              ease: "power1.inOut",
-            },
-            0.15
-          );
+          .add(() => setIsOpen(false), 0.1);
       }
     }, containerRef);
+    
+    return () => ctx.revert();
   };
 
-  // Update tipe target navigasi
-  const navigateWithReveal = (target: "home" | "pricing" | "downloads" | "login") => {
+  const handleNav = (path: string) => {
+    // --- SAFETY GUARD ---
     if (isAnimating || !containerRef.current) return;
+    
     setIsAnimating(true);
     const container = containerRef.current;
-    const blocks = Array.from(
-      container.querySelectorAll(".overlay-reveal-block")
-    ) as HTMLDivElement[];
+    const blocks = gsap.utils.toArray(".overlay-reveal-block") as Element[];
     container.style.opacity = "1";
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        container.style.opacity = "0";
-        setIsAnimating(false);
-      },
-    });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          if (container) container.style.opacity = "0";
+          setIsAnimating(false);
+        }
+      });
 
-    tl.add(() => {
-      setIsOpen(false);
-    }, 0)
-      .fromTo(
-        blocks,
-        { scale: 0, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.35,
-          stagger: { each: 0.0025, from: "random", grid: [10, 10] },
-          ease: "power1.inOut",
-        },
-        0
-      )
-      .to(
-        blocks,
-        {
-          scale: 0,
-          opacity: 0,
-          duration: 0.22,
-          stagger: { each: 0.0025, from: "random", grid: [10, 10] },
-          ease: "power1.inOut",
-        },
-        0.18
-      )
-      .add(() => {
-        if (target === "home") router.push("/#hero");
-        else if (target === "pricing") router.push("/pricing");
-        else if (target === "downloads") router.push("/downloads");
-        else if (target === "login") router.push("/login"); // New Route
-      }, 0.25);
+      tl.add(() => setIsOpen(false), 0)
+        .fromTo(blocks, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, stagger: { each: 0.002, from: "random", grid: "auto" }}, 0)
+        .to(blocks, { scale: 0, opacity: 0, duration: 0.3, stagger: { each: 0.002, from: "random", grid: "auto" }}, 0.5)
+        .add(() => router.push(path), 0.6);
+    }, containerRef);
+    
+    return () => ctx.revert(); // Cleanup manual just in case
   };
-
-  const handleHome = () => navigateWithReveal("home");
-  const handlePricing = () => navigateWithReveal("pricing");
-  const handleDownloads = () => navigateWithReveal("downloads");
-  const handleLogin = () => navigateWithReveal("login"); // New Handler
 
   return (
     <>
-      <button
-        onClick={toggleMenu}
-        className="fixed right-8 top-8 z-[2000] flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md transition-all duration-300 hover:border-blue-normal hover:bg-black/80 hover:shadow-[0_0_20px_rgba(var(--color-blue-normal-rgb),0.4)] active:scale-95"
-      >
-        <div className="flex flex-col gap-1.5">
-            <span 
-                className={`block h-[2px] w-6 bg-white transition-all duration-300 ${isOpen ? "rotate-45 translate-y-2 bg-blue-normal" : ""}`} 
-                style={{ boxShadow: isOpen ? `0 0 10px ${theme.accent}` : "none" }}
-            />
-            <span 
-                className={`block h-[2px] w-4 bg-white transition-all duration-300 self-end ${isOpen ? "opacity-0" : ""}`} 
-            />
-            <span 
-                className={`block h-[2px] w-6 bg-white transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-2 bg-blue-normal" : ""}`} 
-                style={{ boxShadow: isOpen ? `0 0 10px ${theme.accent}` : "none" }}
-            />
+      <button onClick={toggleMenu} className="fixed right-8 top-8 z-[2000] h-14 w-14 flex items-center justify-center rounded-full bg-black/40 backdrop-blur-md border border-white/10 hover:border-blue-normal transition-all">
+        <div className={`flex flex-col gap-1.5 transition-all ${isOpen ? 'rotate-180' : ''}`}>
+           <span className={`h-0.5 w-6 bg-white transition-transform ${isOpen ? 'rotate-45 translate-y-2' : ''}`} />
+           <span className={`h-0.5 w-6 bg-white transition-opacity ${isOpen ? 'opacity-0' : ''}`} />
+           <span className={`h-0.5 w-6 bg-white transition-transform ${isOpen ? '-rotate-45 -translate-y-2' : ''}`} />
         </div>
       </button>
 
-      {/* Grid Reveal Layer */}
-      <div
-        ref={containerRef}
-        className="pointer-events-none fixed inset-0 z-[1500] grid grid-cols-10 md:grid-cols-20 grid-rows-10 md:grid-rows-20 w-full h-full overflow-hidden opacity-0"
-        style={{ willChange: "transform, opacity" }}
-      >
-        {Array.from({ length: 400 }).map((_, i) => (
-          <div
-            key={i}
-            className="overlay-reveal-block bg-blue-normal w-full h-full border-[0.5px] border-blue-normal"
-          />
+      <div ref={containerRef} className="pointer-events-none fixed inset-0 z-[1500] grid grid-cols-10 md:grid-cols-20 w-full h-full overflow-hidden opacity-0">
+        {gridArray.map((_, i) => (
+          <div key={i} className="overlay-reveal-block bg-blue-normal w-full h-full border-[0.5px] border-blue-normal will-change-transform" />
         ))}
       </div>
 
-      {/* Menu Layer */}
-      <div
-        ref={menuRef}
-        className={`fixed inset-0 z-[1000] flex items-center justify-center overflow-hidden transition-opacity duration-0 ${
-            isOpen ? "opacity-100 visible pointer-events-auto" : "opacity-0 invisible pointer-events-none"
-        }`}
-        style={{ willChange: "transform, opacity" }}
-      >
-        {/* Background Gradients */}
+      <div ref={menuRef} className={`fixed inset-0 z-[1000] flex items-center justify-center ${isOpen ? "visible pointer-events-auto" : "invisible pointer-events-none"}`}>
         <div className="absolute inset-0 bg-[var(--color-bg-deep)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a0b2e] via-[var(--color-bg-deep)] to-[var(--color-bg-deep)]" />
-        
-        {/* Menu Items Container */}
-        <div className="relative z-10 flex flex-col items-center gap-2 text-center">
-            
-            {/* HOME */}
-            <div className="group overlay-menu-item relative overflow-hidden p-2">
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-blue-normal group-hover:opacity-0 md:-left-8">01</span>
-                <button onClick={handleHome} className="menu-btn relative block font-black uppercase italic tracking-tighter text-white transition-all duration-300 hover:tracking-widest" style={{ fontSize: "clamp(2.5rem, 5vw, 5rem)", lineHeight: 0.9 }}>
-                    <span className="relative z-10 transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-500">HOME</span>
-                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.accent}`, color: "transparent", textShadow: `0 0 10px ${theme.accent}` }}>HOME</span>
+        <div className="relative z-10 flex flex-col gap-4 text-center">
+            {['HOME', 'PRICING', 'DOWNLOADS', 'LOGIN'].map((item) => (
+                <button key={item} onClick={() => handleNav(item === 'HOME' ? '/#hero' : `/${item.toLowerCase()}`)} className="overlay-menu-item text-6xl md:text-8xl font-black text-white hover:text-blue-normal transition-colors opacity-0">
+                    {item}
                 </button>
-            </div>
-
-            {/* PRICING */}
-            <div className="group overlay-menu-item relative overflow-hidden p-2">
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-blue-normal group-hover:opacity-0 md:-left-8">02</span>
-                <button onClick={handlePricing} className="menu-btn relative block font-black uppercase italic tracking-tighter text-white transition-all duration-300 hover:tracking-widest" style={{ fontSize: "clamp(2.5rem, 5vw, 5rem)", lineHeight: 0.9 }}>
-                    <span className="relative z-10 transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-500">PRICING</span>
-                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.accent}`, color: "transparent", textShadow: `0 0 10px ${theme.accent}` }}>PRICING</span>
-                </button>
-            </div>
-
-            {/* DOWNLOADS */}
-            <div className="group overlay-menu-item relative overflow-hidden p-2">
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-blue-normal group-hover:opacity-0 md:-left-8">03</span>
-                <button onClick={handleDownloads} className="menu-btn relative block font-black uppercase italic tracking-tighter text-white transition-all duration-300 hover:tracking-widest" style={{ fontSize: "clamp(2.5rem, 5vw, 5rem)", lineHeight: 0.9 }}>
-                    <span className="relative z-10 transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-500">DOWNLOADS</span>
-                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.accent}`, color: "transparent", textShadow: `0 0 10px ${theme.accent}` }}>DOWNLOADS</span>
-                </button>
-            </div>
-
-            {/* LOGIN (NEW) */}
-            <div className="group overlay-menu-item relative overflow-hidden p-2">
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 transition-all duration-300 group-hover:left-[-20px] group-hover:text-blue-normal group-hover:opacity-0 md:-left-8">04</span>
-                <button onClick={handleLogin} className="menu-btn relative block font-black uppercase italic tracking-tighter text-white transition-all duration-300 hover:tracking-widest" style={{ fontSize: "clamp(2.5rem, 5vw, 5rem)", lineHeight: 0.9 }}>
-                    <span className="relative z-10 transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-500">LOGIN</span>
-                    <span className="absolute left-0 top-0 z-0 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ WebkitTextStroke: `1px ${theme.accent}`, color: "transparent", textShadow: `0 0 10px ${theme.accent}` }}>LOGIN</span>
-                </button>
-            </div>
-
+            ))}
         </div>
       </div>
+      
+      <style jsx global>{`
+        .will-change-transform { will-change: transform, opacity; transform: translateZ(0); }
+      `}</style>
     </>
   );
 }
