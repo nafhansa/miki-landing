@@ -18,10 +18,22 @@ export default function DownloadPage() {
   const mikiLogoRef = useRef<HTMLDivElement>(null);
   const loadingBarRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    // Force scroll to top on mount
-    window.scrollTo(0, 0);
+  // Gunakan useEffect biasa agar jalan setelah render, tambah timeout kecil
+  React.useEffect(() => {
+    // 1. Matikan scroll restoration browser (biar gak balik ke bawah pas refresh)
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
 
+    // 2. Paksa scroll ke atas dengan sedikit delay agar layout stabil dulu
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 10);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
 
       // Setup Awal
