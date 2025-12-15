@@ -44,8 +44,8 @@ function LandingBackground() {
     <>
       <color attach="background" args={['#000000']} />
       <fog attach="fog" args={['#000000', 5, 30]} />
-      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-      <Sparkles count={100} scale={10} size={4} speed={0.4} opacity={0.5} color="#ffffff" />
+      <Stars radius={100} depth={50} count={2000} factor={4} saturation={0} fade speed={1} />
+      <Sparkles count={50} scale={10} size={4} speed={0.4} opacity={0.5} color="#ffffff" />
     </>
   );
 }
@@ -227,7 +227,7 @@ function SceneContents() {
       </Float>
 
       <EffectComposer>
-        <Bloom intensity={0.8} luminanceThreshold={0.3} luminanceSmoothing={0.8} mipmapBlur resolutionScale={0.5} />
+        <Bloom intensity={0.8} luminanceThreshold={0.3} luminanceSmoothing={0.8} mipmapBlur resolutionScale={0.4} />
       </EffectComposer>
     </>
   );

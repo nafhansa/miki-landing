@@ -170,7 +170,7 @@ export default function StoryHero() {
               className="bg-black"
               worker={worker}
               shadows
-              dpr={[1, 1.5]}
+              dpr={[1, 1.2]}
               gl={{ antialias: true, alpha: true, powerPreference: 'default' }}
               fallback={<div className="w-full h-full bg-black flex items-center justify-center">Loading Scene...</div>}
             />
