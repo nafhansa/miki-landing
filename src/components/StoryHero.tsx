@@ -69,7 +69,7 @@ export default function StoryHero() {
   const textRefs = useMemo(() => [text1Ref, text2Ref, text3Ref, text4Ref] as const, []);
 
   const [showCanvas, setShowCanvas] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0); // For debug indicator
+
 
   useEffect(() => {
     const el = containerRef.current;
@@ -108,29 +108,36 @@ export default function StoryHero() {
     // Simple: Each text matches its camera view
     // Start (0%) → text1, Top (25%) → text2, Side (50%) → text3, Front (75%) → text4
 
+    // Calibrate timeline to 0-1 range (0% to 100% scroll)
+    // Camera Milestones: 25% (Top), 50% (Side), 75% (Front)
+
     tl.set(textRefs[0].current, { opacity: 1, y: 0 })
-      // Text1 fades out before Top view (25%)
-      .to(textRefs[0].current, { opacity: 0, y: -50, duration: 0.05 }, '0.10')
 
-      // Text2 fades in for Top view (25%)
-      .fromTo(textRefs[1].current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.05 }, '0.10')
-      // Text2 fades out before Side view (50%)
-      .to(textRefs[1].current, { opacity: 0, x: -50, duration: 0.05 }, '0.20')
+      // 1. Transition to Top View (Ends at 0.25)
+      // Switch Text 1 -> Text 2 at 15-20%
+      .to(textRefs[0].current, { opacity: 0, y: -50, duration: 0.05 }, 0.15)
+      .fromTo(textRefs[1].current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.05 }, 0.15)
 
-      // Text3 fades in for Side view (50%)
-      .fromTo(textRefs[2].current, { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.05 }, '0.20')
-      // Text3 fades out before Front view (75%)
-      .to(textRefs[2].current, { opacity: 0, duration: 0.05 }, '0.30')
+      // 2. Transition to Side View (Ends at 0.50)
+      // Switch Text 2 -> Text 3 at 40-45%
+      .to(textRefs[1].current, { opacity: 0, x: -50, duration: 0.05 }, 0.40)
+      .fromTo(textRefs[2].current, { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.05 }, 0.40)
 
-      // Text4 fades in for Front view (75%)
-      .fromTo(textRefs[3].current, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.05 }, '0.30');
+      // 3. Transition to Front View (Ends at 0.75)
+      // Switch Text 3 -> Text 4 at 65-70%
+      .to(textRefs[2].current, { opacity: 0, duration: 0.05 }, 0.65)
+      .fromTo(textRefs[3].current, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.05 }, 0.65)
+
+      // IMPORTANT: Anchor the timeline end to 1.0 (100% scroll)
+      // This ensures 0.25 matches exactly 25% of the scroll distance
+      .to({}, { duration: 0.01 }, 1.0);
 
     let isTicking = false;
     let currentProgress = 0;
 
     const onUpdate = (self: ScrollTrigger) => {
       currentProgress = self.progress;
-      setScrollProgress(self.progress); // Update debug indicator
+
       if (!isTicking && worker) {
         window.requestAnimationFrame(() => {
           worker.postMessage({ type: 'scroll', value: currentProgress });
@@ -170,41 +177,6 @@ export default function StoryHero() {
           ) : (
             <div className="w-full h-full bg-black" />
           )}
-        </div>
-
-        {/* Scroll Progress Indicator - Debug Tool */}
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 z-[100] flex flex-col items-end gap-2">
-          {/* Percentage Display */}
-          <div className="bg-black/80 border border-blue-normal px-3 py-2 rounded-lg font-mono text-sm">
-            <span className="text-blue-normal">{Math.round(scrollProgress * 100)}%</span>
-          </div>
-
-          {/* Progress Bar with Markers */}
-          <div className="relative w-2 h-80 bg-gray-800/50 rounded-full">
-            {/* Current Progress Fill */}
-            <div
-              className="absolute bottom-0 w-full bg-gradient-to-t from-blue-normal to-purple-normal rounded-full transition-all duration-100"
-              style={{ height: `${scrollProgress * 100}%` }}
-            />
-
-            {/* View Markers */}
-            {[
-              { pos: 0, label: 'Start', color: 'bg-blue-normal' },
-              { pos: 25, label: 'Top', color: 'bg-purple-normal' },
-              { pos: 50, label: 'Side', color: 'bg-dpurple-normal' },
-              { pos: 75, label: 'Front', color: 'bg-blue-normal' },
-              { pos: 100, label: 'End', color: 'bg-white' },
-            ].map(({ pos, label, color }) => (
-              <div
-                key={pos}
-                className="absolute right-0 flex items-center gap-2"
-                style={{ bottom: `${pos}%`, transform: 'translateY(50%)' }}
-              >
-                <span className="text-xs text-gray-400 font-mono whitespace-nowrap">{label}</span>
-                <div className={`w-3 h-3 rounded-full ${color} border-2 border-black`} />
-              </div>
-            ))}
-          </div>
         </div>
 
         <div className="absolute inset-0 w-full h-full z-50 pointer-events-none">
