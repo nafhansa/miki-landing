@@ -8,12 +8,12 @@ import { Group, AnimationClip } from 'three';
 
 const scrollProgressRef: { current: number } = { current: 0 };
 
-self.onmessage = (e: MessageEvent) => {
+self.addEventListener('message', (e: MessageEvent) => {
   const data = e.data as { type?: string; value?: number };
   if (data && data.type === 'scroll' && typeof data.value === 'number') {
     scrollProgressRef.current = Math.min(1, Math.max(0, data.value));
   }
-};
+});
 
 function lerpVec(a: [number, number, number], b: [number, number, number], t: number): [number, number, number] {
   return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
@@ -74,7 +74,7 @@ function SpeedLines() {
     for (let i = 0; i < count; i++) {
       let xConst!: number;
       let yConst!: number;
-      for (;;) {
+      for (; ;) {
         const x = (Math.random() * 2 - 1) * spreadX;
         const y = (Math.random() * 2 - 1) * spreadY;
         if (!(Math.abs(x) < safeX && Math.abs(y) < safeY)) {
@@ -122,9 +122,9 @@ function SpeedLines() {
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, count]} frustumCulled={false}>
       <boxGeometry args={[0.02, 0.02, 1]} />
-      <meshBasicMaterial 
-        color={neonColor} 
-        transparent 
+      <meshBasicMaterial
+        color={neonColor}
+        transparent
         opacity={0.6}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -179,14 +179,15 @@ function RunningMan(props: React.JSX.IntrinsicElements['group']) {
 function SceneContents() {
   const runnerRef = useRef<Group>(null);
 
-  useFrame(() => {
-    const p = scrollProgressRef.current;
-    const targetRot = p * Math.PI * 2;
-    if (runnerRef.current) {
-      runnerRef.current.rotation.y = THREE.MathUtils.lerp(runnerRef.current.rotation.y, targetRot, 0.15);
-      runnerRef.current.position.y = THREE.MathUtils.lerp(runnerRef.current.position.y, Math.sin(p * Math.PI) * 0.2, 0.1);
-    }
-  });
+  // Model stays static, only camera moves with scroll
+  // useFrame(() => {
+  //   const p = scrollProgressRef.current;
+  //   const targetRot = p * Math.PI * 2;
+  //   if (runnerRef.current) {
+  //     runnerRef.current.rotation.y = THREE.MathUtils.lerp(runnerRef.current.rotation.y, targetRot, 0.15);
+  //     runnerRef.current.position.y = THREE.MathUtils.lerp(runnerRef.current.position.y, Math.sin(p * Math.PI) * 0.2, 0.1);
+  //   }
+  // });
 
   return (
     <>
