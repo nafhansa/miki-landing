@@ -19,6 +19,9 @@ export default function DownloadPage() {
   const loadingBarRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
+    // Force scroll to top on mount
+    window.scrollTo(0, 0);
+
     const ctx = gsap.context(() => {
 
       // Setup Awal
